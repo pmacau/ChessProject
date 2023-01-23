@@ -9,10 +9,16 @@ and going to 10 levels. Each floor getting progressively more difficult,
 with more and more challenges. Not every floor will be 
 inherently unique, some floors will simply just be iterations of past floors,
 however tweaked to make it more difficult. Beating floor 10, means
-you beat the game, and have the option to restart. Each time you beat a floor
-you earn a certain amount of gold, with the gold you can buy items
-in an item shop between levels that may help you in certain situations. If you 
-get eliminated on a level, you have the option to either quit the game, 
+you beat the game, and have the option to restart, and go through a more difficult
+version,  until you are defeated. Each time you beat a floor
+you earn a certain amount of gold, with the gold you can buy items or upgrade
+attributes
+in a shop between levels that may help you in certain situations. There are three difficulties:
+Easy, Normal, and Hard, each will give you differing amounts of gold according to the difficulty, and if you are going 
+through the game again after beating it, the floors will be even harder than last time, yet more rewarding 
+so the player has more upgrades and items available to them.
+If the player 
+gets eliminated on a level, you have the option to either quit the game, 
 or restart. 
 
 
@@ -33,7 +39,11 @@ this sort of genre.
 
 ## User Stories  
 As a user,
-- I want to see my in-game statistics on the main menu. 
+- I want to see my in-game statistics from the main menu. 
 - I want the option to enter the item shop off the menu to
 see what's available. 
+- I want to be able to add items to my inventory, and upgrade items an arbitrary
+amount of times.
+- I want to be able to pause the game in the middle of a floor. 
+- I want the option to increase the difficulty of a new game.
 
