@@ -46,4 +46,4 @@ see what's available.
 - I want upgrade items an arbitrary amount of times.
 - I want to be able to pause the game in the middle of a floor. 
 - I want the option to increase the difficulty of a new game.
-
+.
