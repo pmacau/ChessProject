@@ -1,6 +1,6 @@
 # My Personal Project
 
-## A subtitle
+
 
 ## **Questions/Answers and some Information about the Project** 
 - ### ***What will the application do?***
@@ -42,8 +42,8 @@ As a user,
 - I want to see my in-game statistics from the main menu. 
 - I want the option to enter the item shop off the menu to
 see what's available. 
-- I want to be able to add items to my inventory, and upgrade items an arbitrary
-amount of times.
+- I want to be able to add items to my inventory
+- I want upgrade items an arbitrary amount of times.
 - I want to be able to pause the game in the middle of a floor. 
 - I want the option to increase the difficulty of a new game.
 
