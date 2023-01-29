@@ -46,4 +46,4 @@ progression of a board (potential reach).
 "self memorize" mode rather than the "normal" mode (in which was described prior). 
 I want a modifier that makes it so only one side can spawn, or potentially more sides, more than just
 black and white. 
-- I want the difficulties to give a certain amount of lives (attempts that you can get incorrect with resetting)
+- I want the difficulties to give a certain amount of lives (attempts that you can get incorrect with resetting).
