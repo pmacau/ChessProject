@@ -1,7 +1,13 @@
 package ui;
 
-public class Main {
-    public static void main(String[] args) {
+import model.Board;
 
+
+
+public class Main extends model.Board {
+    public Main(Integer dimensions) {
+        super(dimensions);
     }
 }
+
+
