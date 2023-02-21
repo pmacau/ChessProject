@@ -3,11 +3,11 @@ package ui;
 import model.Board;
 
 
-
-public class Main extends model.Board {
-    public Main(Integer dimensions) {
-        super(dimensions);
+public class Main {
+    public static void main(String[] args) {
+        new BoardApp();
     }
 }
+
 
 
