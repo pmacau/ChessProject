@@ -2,14 +2,12 @@ package ui;
 
 import model.Board;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class BoardApp {
     private Board board;
     private Scanner scan;
+    private Integer difficultyTime;
 
     public BoardApp() {
         runBoardApp();
@@ -26,23 +24,32 @@ public class BoardApp {
             if (input.equals("q")) {
                 keepGoing = false;
             } else if (input.equals("Play")) {
-                playCommand();
+                playOptions();
             }
         }
 
         System.out.println("\nGame is finished!");
     }
 
-    public void playCommand() {
-        playOptions();
-
-    }
-
 
     public void playOptions() {
+        difficultyUI();
         System.out.println("What dimensions would you like the board to be? " + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8" + "\n Must be a perfect square e.g 4, 8, 16, 64..." + "\n Type in a perfect square to start.");
         init();
         play();
+    }
+
+    public void difficultyUI() {
+        System.out.println("What difficulty? Options: 'Hard', 'Medium', 'Easy' (default) (impacts the time delay in which you have to recall the pieces shown on the board)");
+        scan = new Scanner(System.in);
+        String difficultyChoice = scan.next();
+        if (difficultyChoice.equals("Hard")) {
+            difficultyTime = 2000;
+        } else if (difficultyChoice.equals("Medium")) {
+            difficultyTime = 4000;
+        } else {
+            difficultyTime = 8000;
+        }
     }
 
     public void init() {
@@ -60,28 +67,49 @@ public class BoardApp {
         while (runningBoard) {
             List<String> listBoard = board.getBoard();
             displayRowsAndColumns(listBoard);
-            System.out.print("\n---------------" + "\n---------------" + "\n---------------");
-            System.out.print("Please recall the positions on the board, separate multiple pieces with a space, also make sure"
-                    + "to use the notation presented in the visual printed, e.g. b.Nx6y5 would indicate a knight on "
-                    + "the 5th row and 6th column presented in the board");
-            scan = new Scanner(System.in);
-            String recall = scan.next();
-            gatherRecalls(recall);
+            displayInstructions();
             if (!board.check(gatherRecalls())) {
+                System.out.println("You are incorrect");
                 runningBoard = false;
+            } else {
+                System.out.println("You are correct");
+                board.genNextPos();
             }
         }
     }
 
-    public List<String> gatherRecalls(String recall) {
-        return null;
+    public void displayInstructions() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                System.out.print("\n---------------" + "\n---------------" + "\n---------------");
+                // in the final version the board itself will disappear, however I don't believe the console for IntelliJ is capable of that or at least
+                // to my knowledge.
+                System.out.print("\n Please recall the positions on the board, separate multiple pieces with a comma, also make sure"
+                        + "to use the notation presented in the visual printed, e.g. b.N;6.5, would indicate a knight on "
+                        + "\n 6th column presented and the 5th row in the board, starting from 0 at the top left of the board."
+                        + "\n Enter here:");
+            }
+        }, difficultyTime);
     }
+
+    // Used https://beginnersbook.com/2015/05/java-string-to-arraylist-conversion/#:~:text=1)%20First%20split%20the%20string,asList()%20method.
+    public List<String> gatherRecalls() {
+        scan = new Scanner(System.in);
+        String recall = scan.next();
+        String[] str;
+        str = recall.split(",");
+        List<String> separatedCoordinates = new ArrayList<>();
+        separatedCoordinates = Arrays.asList(str);
+        return separatedCoordinates;
+    }
+
 
     public void displayRowsAndColumns(List<String> board) {
         int rowLength = (int) Math.sqrt(board.size());
         int i = 0;
         for (String p : board) {
-            System.out.print(p + " ");
+            System.out.print(p + "    ");
             i++;
             if (i % rowLength == 0) {
                 System.out.println();

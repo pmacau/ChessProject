@@ -11,7 +11,7 @@ public class Board {
     private List<String> board;
     private List<String> pieces;
     private List<String> side;
-
+    private List<String> pieceSet;
 
     // Effects: Constructs a board with the dimensions given, for example, the input 8, would produce a
     // board of 8^2, 64 Tiles.
@@ -28,6 +28,8 @@ public class Board {
         side.add("w"); // white
         side.add("b"); // black
         slots = (int) Math.pow(numTiles, 2);
+        pieceSet = new ArrayList<>();
+
     }
 
 
@@ -42,8 +44,7 @@ public class Board {
         }
     }
 
-    public void genBoard() {
-        genRowsAndColumns();
+    public void genNextPos() {
         Random random = new Random();
         Integer x;
         Integer y;
@@ -59,20 +60,50 @@ public class Board {
         indexTeam = random.nextInt((side.size()));
         team = side.get(indexTeam);
         indexCord = y * (int) Math.sqrt(slots) + x;
-        board.set(indexCord, team + "." + piece);
+        if (duplicateCord(x, y)) {
+            genNextPos();
+        } else {
+            board.set(indexCord, team + "." + piece);
+            genSet(x, y, piece, team);
+        }
+    }
+
+    public boolean duplicateCord(Integer x, Integer y) {
+        return (!("X" == (board.get(y * (int) Math.sqrt(slots) + x))));
+    }
+
+    public void genBoard() {
+        genRowsAndColumns();
+        genNextPos();
         getBoard();
     }
 
+    public void nextBoard() {
+
+    }
+
+    // stores all locations of pieces.
+    public void genSet(Integer x, Integer y, String piece, String team) {
+        String pieceCord = team + "." + piece + ";" + x + "." + y;
+        pieceSet.add(pieceCord);
+    }
+
+    public Boolean check(List<String> proposedSet) {
+        Boolean equivalence = true;
+        for (String coordinate : proposedSet) {
+            if (!pieceSet.contains(coordinate)) {
+                equivalence = false;
+            }
+
+        }
+        return equivalence;
+    }
 
     //Effects: Generates the board with the given Tiles
     //Requires: Tiles > 0
     //Modifies: This
     public List<String> getBoard() {
         return board;
-    }
-
-    public Boolean check(List<String> cords) {
-        return true;
     }
 
 
