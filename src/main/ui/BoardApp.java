@@ -25,9 +25,10 @@ public class BoardApp {
                 keepGoing = false;
             } else if (input.equals("Play")) {
                 playOptions();
+
             }
         }
-
+        keepGoing = false;
         System.out.println("\nGame is finished!");
     }
 
@@ -68,14 +69,25 @@ public class BoardApp {
             List<String> listBoard = board.getBoard();
             displayRowsAndColumns(listBoard);
             displayInstructions();
-            if (!board.check(gatherRecalls())) {
+            if (board.solved()) {
+                System.out.println("You have solved the entire board!");
+                runningBoard = false;
+            } else if (!board.check(gatherRecalls())) {
                 System.out.println("You are incorrect");
                 runningBoard = false;
+                runBoardApp();
             } else {
                 System.out.println("You are correct");
                 board.genNextPos();
             }
         }
+        System.out.println("Do you want to quit (type 'q') or go back to main menu (type 'menu')?");
+        scan = new Scanner(System.in);
+        String option = scan.next();
+        if (option.equals("menu")) {
+            playOptions();
+        }
+
     }
 
     public void displayInstructions() {

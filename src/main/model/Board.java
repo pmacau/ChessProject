@@ -106,6 +106,16 @@ public class Board {
         return board;
     }
 
+    public Boolean solved() {
+        Boolean full = true;
+        for (String tile : board) {
+            if (tile.equals("X")) {
+                full = false;
+            }
+        }
+        return full;
+    }
+
 
 }
 
