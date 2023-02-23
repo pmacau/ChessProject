@@ -54,7 +54,8 @@ public class BoardApp {
     // Effects: Sets the difficulty of the game.
     // Modifies: This
     public void difficultyUI() {
-        System.out.println("What difficulty? Options: 'Hard', 'Medium', 'Easy' (default) (impacts the time delay in which you have to recall the pieces shown on the board)");
+        System.out.println("What difficulty? Options: 'Hard', 'Medium', 'Easy' (default) "
+                + "(impacts the time delay in which you have to recall the pieces shown on the board)");
         scan = new Scanner(System.in);
         String difficultyChoice = scan.next();
         if (difficultyChoice.equals("Hard")) {
@@ -73,7 +74,8 @@ public class BoardApp {
     // Modifies: this
     public void playInit() {
         boardStats = new BoardStats();
-        System.out.println("What dimensions would you like the board to be? " + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8" + "\n Must be a perfect square e.g 4, 8, 16, 64..." + "\n Type in a perfect square to start.");
+        System.out.println("What dimensions would you like the board to be (any integer > 1)? "
+                + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8)");
         String dimensionChoice = scan.next();
         Integer numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
@@ -89,15 +91,19 @@ public class BoardApp {
     public void play() {
         Boolean runningBoard = true;
         while (runningBoard) {
-            display(listBoard);
-            if (board.solved()) {
-                correct();
-                runningBoard = false;
-            } else if (!board.check(gatherRecalls())) {
+            displayRowsAndColumns(listBoard);
+            displayInstructions();
+            if (!board.check(gatherRecalls())) {
                 incorrect();
                 runningBoard = false;
             } else {
                 correct();
+                if (board.solved()) {
+                    complete();
+                    runningBoard = false;
+                } else {
+                    board.genNextPos();
+                }
             }
         }
         System.out.println("Do you want to quit (type 'q') or go back to main menu (type 'menu')?");
@@ -110,8 +116,8 @@ public class BoardApp {
 
     public void correct() {
         System.out.println("You are correct");
-        board.genNextPos();
-        boardStats.streak(1);
+        boardStats.streak();
+        boardStats.updateGuess();
     }
 
     public void incorrect() {
@@ -127,13 +133,6 @@ public class BoardApp {
     }
 
 
-    // Effects: Runs user display
-    // Modifies: This
-    public void display(List<String> listBoard) {
-        displayRowsAndColumns(listBoard);
-        displayInstructions();
-    }
-
     // Effects: Makes the board 'disappear' and instructs user how to recall.
     // Modifies: This
     public void displayInstructions() {
@@ -141,11 +140,15 @@ public class BoardApp {
         timer.schedule(new TimerTask() {
             public void run() {
                 System.out.print("\n---------------" + "\n---------------" + "\n---------------");
-                // in the final version the board itself will disappear, however I don't believe the console for IntelliJ is capable of that or at least
+                // in the final version the board itself will disappear, however
+                // I don't believe the console for IntelliJ is capable of that or at least
                 // to my knowledge.
-                System.out.print("\n Please recall the positions on the board, separate multiple pieces with a comma, also make sure"
-                        + "to use the notation presented in the visual printed, e.g. b.N;6.5, would indicate a knight on "
-                        + "\n 6th column presented and the 5th row in the board, starting from 0 at the top left of the board."
+                System.out.print("\n Please recall the positions on the board, "
+                        + "separate multiple pieces with a comma, also make sure"
+                        + "to use the notation presented in the visual printed, "
+                        + "e.g. b.N;6.5, would indicate a knight on "
+                        + "\n 6th column presented and the 5th row in the board, "
+                        + "starting from 0 at the top left of the board."
                         + "\n Enter here:");
             }
         }, difficultyTime);
@@ -182,7 +185,7 @@ public class BoardApp {
 
     public void seeStats() {
         List<BoardStats> totalStats = stats.returnStats();
-        System.out.println("Prior game statistics:");
+        System.out.println("Stats of all prior games:");
         for (BoardStats statistic : totalStats) {
             System.out.println(statistic.getTotalStat());
         }

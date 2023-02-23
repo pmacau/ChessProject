@@ -19,7 +19,7 @@ public class BoardStatsTests {
     }
 
     @Test
-    public void addGuess(){
+    public void addGuessTest(){
         boardStat.addGuess("b.N;6.5");
         List<String> array1 = new ArrayList<>();
         array1.add("N");
@@ -31,4 +31,10 @@ public class BoardStatsTests {
         array1.add("Q");
         assertEquals(array1, boardStat.getGuess());
     }
+
+    @Test
+    public void updateGuessTest(){
+
+    }
+
 }

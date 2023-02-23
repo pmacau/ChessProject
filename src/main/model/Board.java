@@ -6,7 +6,6 @@ import java.util.Random;
 
 
 public class Board {
-    private List<String> boardGeneration;
     private Integer slots;
     private List<String> board;
     private List<String> pieces;
@@ -23,7 +22,8 @@ public class Board {
 
     }
 
-    // Effects: Creates the set of chess pieces in rotation.
+
+    // Effects: Creates the set of chess pieces in rotation
     // Modifies: This
     public void pieces() {
         pieces = new ArrayList<>();
@@ -96,13 +96,14 @@ public class Board {
     public void genBoard() {
         genRowsAndColumns();
         genNextPos();
-        getBoard();
+        // getBoard();
 
     }
 
     // Effects: stores all locations of pieces.
     // Modifies: this
-    // Requires: x, and y must be in the domain of the board, and should be a valid piece and team meaning one of the specified.
+    // Requires: x, and y must be in the domain of the board, and should be a valid piece and team
+    // meaning one of the specified.
     public void genSet(Integer x, Integer y, String piece, String team) {
         String pieceCord = team + "." + piece + ";" + x + "." + y;
         pieceSet.add(pieceCord);
