@@ -12,6 +12,7 @@ public class BoardApp {
     private Integer difficultyTime;
     private Stats stats;
     private BoardStats boardStats;
+    private List<String> listBoard;
 
 
     public BoardApp() {
@@ -22,6 +23,7 @@ public class BoardApp {
     // Modifies: This
     private void runBoardApp() {
         boolean keepGoing = true;
+        statInit();
         System.out.println("Input 'Play' to start the a new game or 'q' to quit");
         while (keepGoing) {
             scan = new Scanner(System.in);
@@ -30,19 +32,25 @@ public class BoardApp {
                 keepGoing = false;
             } else if (input.equals("Play")) {
                 initOptions();
-
             }
         }
         keepGoing = false;
         System.out.println("\nGame is finished!");
     }
 
+    // Effects: Initializes entire stats class.
+    // Modifies: This.
+    public void statInit() {
+        stats = new Stats();
+    }
+
     // Effects: packages essential play methods for user.
     public void initOptions() {
-        difficultyUI();
         playInit();
+        difficultyUI();
         play();
     }
+
     // Effects: Sets the difficulty of the game.
     // Modifies: This
     public void difficultyUI() {
@@ -51,43 +59,45 @@ public class BoardApp {
         String difficultyChoice = scan.next();
         if (difficultyChoice.equals("Hard")) {
             difficultyTime = 2000;  // purely UI data, does not have any impact on board.
+            boardStats.difficulty("Hard");
         } else if (difficultyChoice.equals("Medium")) {
             difficultyTime = 4000;
+            boardStats.difficulty("Medium");
         } else {
             difficultyTime = 8000;
+            boardStats.difficulty("Easy");
         }
     }
+
     // Effects: Initializes play instance, by generating the board, with the given user inputs.
     // Modifies: this
     public void playInit() {
+        boardStats = new BoardStats();
         System.out.println("What dimensions would you like the board to be? " + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8" + "\n Must be a perfect square e.g 4, 8, 16, 64..." + "\n Type in a perfect square to start.");
-        scan = new Scanner(System.in);
         String dimensionChoice = scan.next();
         Integer numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
+        boardStats.boardSize((int) Math.pow(numDimension, 2));
         board.genBoard();
-        // boards = new boards();
-        boardStats = new BoardStats();
+        scan = new Scanner(System.in);
+        listBoard = board.getBoard();
 
     }
+
     // Effects: Runs the recall game with the board instance.
     // Modifies: This
     public void play() {
         Boolean runningBoard = true;
         while (runningBoard) {
-            List<String> listBoard = board.getBoard();
-            displayRowsAndColumns(listBoard);
-            displayInstructions();
+            display(listBoard);
             if (board.solved()) {
-                System.out.println("You have solved the entire board!");
+                correct();
                 runningBoard = false;
             } else if (!board.check(gatherRecalls())) {
-                System.out.println("You are incorrect");
-                runBoardApp();
+                incorrect();
                 runningBoard = false;
             } else {
-                System.out.println("You are correct");
-                board.genNextPos();
+                correct();
             }
         }
         System.out.println("Do you want to quit (type 'q') or go back to main menu (type 'menu')?");
@@ -96,8 +106,34 @@ public class BoardApp {
         if (option.equals("menu")) {
             initOptions();
         }
-
     }
+
+    public void correct() {
+        System.out.println("You are correct");
+        board.genNextPos();
+        boardStats.streak(1);
+    }
+
+    public void incorrect() {
+        System.out.println("You are incorrect");
+        stats.addStat(boardStats);
+        seeStats();
+    }
+
+    public void complete() {
+        System.out.println("You have solved the entire board!");
+        stats.addStat(boardStats);
+        seeStats();
+    }
+
+
+    // Effects: Runs user display
+    // Modifies: This
+    public void display(List<String> listBoard) {
+        displayRowsAndColumns(listBoard);
+        displayInstructions();
+    }
+
     // Effects: Makes the board 'disappear' and instructs user how to recall.
     // Modifies: This
     public void displayInstructions() {
@@ -114,18 +150,21 @@ public class BoardApp {
             }
         }, difficultyTime);
     }
+
     // Effects: Converts the recall into comparable format to Board's specifications.
     // Used https://beginnersbook.com/2015/05/java-string-to-arraylist-conversion/#:~:text=1)%20First%20split%20the%20string,asList()%20method.
     public List<String> gatherRecalls() {
         scan = new Scanner(System.in);
         String recall = scan.next();
+        boardStats.addGuess(recall);
         String[] str;
         str = recall.split(",");
         List<String> separatedCoordinates = new ArrayList<>();
         separatedCoordinates = Arrays.asList(str);
         return separatedCoordinates;
     }
-// Effects: Displays the board with the current positions.
+
+    // Effects: Displays the board with the current positions.
 // Used as a reference: https://stackoverflow.com/questions/58326516/how-to-print-arraylist-into-rows-and-columns
     public void displayRowsAndColumns(List<String> board) {
         int rowLength = (int) Math.sqrt(board.size());
@@ -138,6 +177,14 @@ public class BoardApp {
             }
 
 
+        }
+    }
+
+    public void seeStats() {
+        List<BoardStats> totalStats = stats.returnStats();
+        System.out.println("Prior game statistics:");
+        for (BoardStats statistic : totalStats) {
+            System.out.println(statistic.getTotalStat());
         }
     }
 }

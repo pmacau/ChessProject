@@ -10,8 +10,8 @@ public class Stats {
         this.stats = new ArrayList<>();
     }
 
-    public void addStat(BoardStats statistics) {
-        this.stats.add(statistics);
+    public void addStat(BoardStats statistic) {
+        this.stats.add(statistic);
     }
 
     public List<BoardStats> returnStats() {
