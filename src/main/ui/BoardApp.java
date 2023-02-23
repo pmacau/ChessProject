@@ -1,6 +1,7 @@
 package ui;
 
 import model.Board;
+import model.BoardReplays;
 
 import java.util.*;
 
@@ -8,6 +9,7 @@ public class BoardApp {
     private Board board;
     private Scanner scan;
     private Integer difficultyTime;
+    private BoardReplays boards;
 
     public BoardApp() {
         runBoardApp();
@@ -59,12 +61,12 @@ public class BoardApp {
         Integer numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
         board.genBoard();
+        // boards = new boards();
 
     }
 
     public void play() {
-        Boolean runningBoard;
-        runningBoard = true;
+        Boolean runningBoard = true;
         while (runningBoard) {
             List<String> listBoard = board.getBoard();
             displayRowsAndColumns(listBoard);
@@ -74,8 +76,8 @@ public class BoardApp {
                 runningBoard = false;
             } else if (!board.check(gatherRecalls())) {
                 System.out.println("You are incorrect");
-                runningBoard = false;
                 runBoardApp();
+                runningBoard = false;
             } else {
                 System.out.println("You are correct");
                 board.genNextPos();
@@ -116,7 +118,7 @@ public class BoardApp {
         return separatedCoordinates;
     }
 
-
+// Used as a reference: https://stackoverflow.com/questions/58326516/how-to-print-arraylist-into-rows-and-columns
     public void displayRowsAndColumns(List<String> board) {
         int rowLength = (int) Math.sqrt(board.size());
         int i = 0;

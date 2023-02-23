@@ -34,10 +34,13 @@ making board recall more intuitive over time, which could be applied to the real
 As a user,
 - I want to see my highest streak of puzzles solved.
 - I want to see my attempts be added and tracked to statistics. 
-- I want to see how many puzzles I've solved in total. 
+- I want to see how many puzzles I've solved in total. (completed)
 - I want to see what difficulty I play most. 
-- I want to be able to select what difficulty I want to play from the start. 
+- I want to be able to select what difficulty I want to play from the start. (completed)
 - I want to be able to have puzzle modifiers, that can amplify standard difficulty,
+- I want to be able to see what puzzles I've solved (arbitrary listof Board). (completed)
+- I want to be able to see my most recent replay of what I solved (arbitrary listof Board, as each advancement is an updated/different 
+- Board, and it is arbitrary since it depends how big your board is). (completed)
 specifically, being able to make it so they're random colours (white or black), so you 
 have to memorize the sides of the pieces as well. 
 - I want to be able to have a modifier where a piece takes another piece in the next

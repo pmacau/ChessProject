@@ -17,6 +17,13 @@ public class Board {
     // board of 8^2, 64 Tiles.
     // Requires: dimensions > 0, and must be a perfect square.
     public Board(Integer numTiles) {
+        pieces();
+        sides();
+        slots = (int) Math.pow(numTiles, 2);
+
+    }
+
+    public void pieces() {
         pieces = new ArrayList<>();
         pieces.add("P"); // pawn
         pieces.add("B"); // bishop
@@ -24,14 +31,14 @@ public class Board {
         pieces.add("N"); // knight, N instead of Kn for chess convention, and convenience for 1 letter.
         pieces.add("Q"); // queen
         pieces.add("K"); // king
+        pieceSet = new ArrayList<>();
+    }
+
+    public void sides() {
         side = new ArrayList<>();
         side.add("w"); // white
         side.add("b"); // black
-        slots = (int) Math.pow(numTiles, 2);
-        pieceSet = new ArrayList<>();
-
     }
-
 
     public int getSlots() {
         return slots;
@@ -90,12 +97,12 @@ public class Board {
 
     public Boolean check(List<String> proposedSet) {
         Boolean equivalence = true;
-        for (String coordinate : proposedSet) {
-            if (!pieceSet.contains(coordinate)) {
-                equivalence = false;
-            }
 
+        if (!proposedSet.containsAll(pieceSet)) {
+            equivalence = false;
         }
+
+
         return equivalence;
     }
 
@@ -119,3 +126,8 @@ public class Board {
 
 }
 
+//for (String coordinate : proposedSet) {
+      //  if (!pieceSet.contains(coordinate)) {
+      //  equivalence = false;
+      //  }
+      //  }
