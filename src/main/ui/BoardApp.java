@@ -1,7 +1,8 @@
 package ui;
 
 import model.Board;
-import model.BoardReplays;
+import model.BoardStats;
+import model.Stats;
 
 import java.util.*;
 
@@ -9,14 +10,16 @@ public class BoardApp {
     private Board board;
     private Scanner scan;
     private Integer difficultyTime;
-    private BoardReplays boards;
+    private Stats stats;
+    private BoardStats boardStats;
+
 
     public BoardApp() {
         runBoardApp();
     }
 
-    // Used TellerApp to heavily influence my UI design choices, e.g the runBoardApp is almost identical to
-    // runtellerApp.
+    // Effects: Runs the boardApp UI.
+    // Modifies: This
     private void runBoardApp() {
         boolean keepGoing = true;
         System.out.println("Input 'Play' to start the a new game or 'q' to quit");
@@ -26,7 +29,7 @@ public class BoardApp {
             if (input.equals("q")) {
                 keepGoing = false;
             } else if (input.equals("Play")) {
-                playOptions();
+                initOptions();
 
             }
         }
@@ -34,37 +37,41 @@ public class BoardApp {
         System.out.println("\nGame is finished!");
     }
 
-
-    public void playOptions() {
+    // Effects: packages essential play methods for user.
+    public void initOptions() {
         difficultyUI();
-        System.out.println("What dimensions would you like the board to be? " + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8" + "\n Must be a perfect square e.g 4, 8, 16, 64..." + "\n Type in a perfect square to start.");
-        init();
+        playInit();
         play();
     }
-
+    // Effects: Sets the difficulty of the game.
+    // Modifies: This
     public void difficultyUI() {
         System.out.println("What difficulty? Options: 'Hard', 'Medium', 'Easy' (default) (impacts the time delay in which you have to recall the pieces shown on the board)");
         scan = new Scanner(System.in);
         String difficultyChoice = scan.next();
         if (difficultyChoice.equals("Hard")) {
-            difficultyTime = 2000;
+            difficultyTime = 2000;  // purely UI data, does not have any impact on board.
         } else if (difficultyChoice.equals("Medium")) {
             difficultyTime = 4000;
         } else {
             difficultyTime = 8000;
         }
     }
-
-    public void init() {
+    // Effects: Initializes play instance, by generating the board, with the given user inputs.
+    // Modifies: this
+    public void playInit() {
+        System.out.println("What dimensions would you like the board to be? " + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8" + "\n Must be a perfect square e.g 4, 8, 16, 64..." + "\n Type in a perfect square to start.");
         scan = new Scanner(System.in);
         String dimensionChoice = scan.next();
         Integer numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
         board.genBoard();
         // boards = new boards();
+        boardStats = new BoardStats();
 
     }
-
+    // Effects: Runs the recall game with the board instance.
+    // Modifies: This
     public void play() {
         Boolean runningBoard = true;
         while (runningBoard) {
@@ -87,11 +94,12 @@ public class BoardApp {
         scan = new Scanner(System.in);
         String option = scan.next();
         if (option.equals("menu")) {
-            playOptions();
+            initOptions();
         }
 
     }
-
+    // Effects: Makes the board 'disappear' and instructs user how to recall.
+    // Modifies: This
     public void displayInstructions() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -106,7 +114,7 @@ public class BoardApp {
             }
         }, difficultyTime);
     }
-
+    // Effects: Converts the recall into comparable format to Board's specifications.
     // Used https://beginnersbook.com/2015/05/java-string-to-arraylist-conversion/#:~:text=1)%20First%20split%20the%20string,asList()%20method.
     public List<String> gatherRecalls() {
         scan = new Scanner(System.in);
@@ -117,7 +125,7 @@ public class BoardApp {
         separatedCoordinates = Arrays.asList(str);
         return separatedCoordinates;
     }
-
+// Effects: Displays the board with the current positions.
 // Used as a reference: https://stackoverflow.com/questions/58326516/how-to-print-arraylist-into-rows-and-columns
     public void displayRowsAndColumns(List<String> board) {
         int rowLength = (int) Math.sqrt(board.size());

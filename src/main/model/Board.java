@@ -23,6 +23,8 @@ public class Board {
 
     }
 
+    // Effects: Creates the set of chess pieces in rotation.
+    // Modifies: This
     public void pieces() {
         pieces = new ArrayList<>();
         pieces.add("P"); // pawn
@@ -34,6 +36,8 @@ public class Board {
         pieceSet = new ArrayList<>();
     }
 
+    // Effects: Creates black and white, which is the two sides the pieces can be on.
+    // Modifies: This
     public void sides() {
         side = new ArrayList<>();
         side.add("w"); // white
@@ -44,6 +48,8 @@ public class Board {
         return slots;
     }
 
+    // Effects: Generates blank board.
+    // Modifies: This
     public void genRowsAndColumns() {
         board = new ArrayList();
         for (int i = 0; i < this.getSlots(); i++) {
@@ -51,6 +57,9 @@ public class Board {
         }
     }
 
+    // Effects: Generates next board state by adding a random piece onto a board.
+    // Modifies: This
+    // Requires: Cannot add piece onto an already taken slot.
     public void genNextPos() {
         Random random = new Random();
         Integer x;
@@ -73,46 +82,51 @@ public class Board {
             board.set(indexCord, team + "." + piece);
             genSet(x, y, piece, team);
         }
+
+
     }
 
+    // Effects: Checks to see if a proposed next state has a duplicate tile assignment.
+    // Requires: y * sqrt(slots) + x to have equal or less size than board.
     public boolean duplicateCord(Integer x, Integer y) {
         return (!("X" == (board.get(y * (int) Math.sqrt(slots) + x))));
     }
 
+    // Effects: Generates board
     public void genBoard() {
         genRowsAndColumns();
         genNextPos();
         getBoard();
-    }
-
-    public void nextBoard() {
 
     }
 
-    // stores all locations of pieces.
+    // Effects: stores all locations of pieces.
+    // Modifies: this
+    // Requires: x, and y must be in the domain of the board, and should be a valid piece and team meaning one of the specified.
     public void genSet(Integer x, Integer y, String piece, String team) {
         String pieceCord = team + "." + piece + ";" + x + "." + y;
         pieceSet.add(pieceCord);
     }
 
+    // Effects: Checks if the recall is correct.
     public Boolean check(List<String> proposedSet) {
         Boolean equivalence = true;
 
         if (!proposedSet.containsAll(pieceSet)) {
             equivalence = false;
+
         }
 
 
         return equivalence;
     }
 
-    //Effects: Generates the board with the given Tiles
-    //Requires: Tiles > 0
-    //Modifies: This
+
     public List<String> getBoard() {
         return board;
     }
 
+    // Effects: Checks if the board is solved (full)
     public Boolean solved() {
         Boolean full = true;
         for (String tile : board) {
@@ -123,11 +137,4 @@ public class Board {
         return full;
     }
 
-
 }
-
-//for (String coordinate : proposedSet) {
-      //  if (!pieceSet.contains(coordinate)) {
-      //  equivalence = false;
-      //  }
-      //  }
