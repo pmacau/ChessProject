@@ -101,12 +101,17 @@ public class BoardStatsTests {
         testingAllPossibleMax5.addGuess("b.B;1.1");
         assertEquals("Bishop", testingAllPossibleMax5.getTotalStat().get(7));
     }
+
+
     @Test
     public void emptyGuess(){
         boardStat.sortGuessByMax(0, 0, 0,0,0,0);
         boardStat.getTotalStat();
         assertEquals("N/A", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(1, 0, 0,0,0,0);
+        assertEquals("King", boardStat.getTotalStat().get(7));
     }
+
 
 
 }
