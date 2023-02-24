@@ -32,7 +32,7 @@ making board recall more intuitive over time, which could be applied to the real
 
 ## User Stories  
 As a user,
-- I want to see my highest streak on a board in statistics. (completed)
+- I want to see my streak on a board in statistics. (completed)
 - I want to see my attempts be added and tracked to statistics. (completed)
 - I want to see what difficulty I played in past boards. (completed)
 - I want to be able to select what difficulty I want to play from the start. (completed) 
