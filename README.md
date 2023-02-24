@@ -38,7 +38,7 @@ As a user,
 - I want to be able to select what difficulty I want to play from the start. (completed) 
 - I want to be able to choose what size board I play. (completed)
 - I want to be able to see statistics of what puzzles I've solved (arbitrary listof BoardStats). (completed)
-- I want to see what pieces I guess right most in statistics. (completed)
+- I want to see what pieces I guess most in statistics. (completed)
 - I want the difficulties to give a certain amount of time to recall. (completed)
 - I want there to be no duplicate tile assignments to a board. (complete)
 - I want there to be random pieces added to the board. (complete)
