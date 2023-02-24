@@ -122,6 +122,7 @@ public class BoardApp {
         boardStats.streak();
         boardStats.updateGuess();
     }
+
     // Effects: Displays incorrect message for user, and updates statistics.
     // Modifies: This
     public void incorrect() {
@@ -129,6 +130,7 @@ public class BoardApp {
         stats.addStat(boardStats);
         seeStats();
     }
+
     // Modifies: This.
     // Effects: Displays completion for user, and updates statistics.
     public void complete() {

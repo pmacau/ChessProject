@@ -127,6 +127,12 @@ public class Board {
         return board;
     }
 
+    // Getter
+    public List<String> getPieceSet() {
+        return pieceSet;
+    }
+
+
     // Effects: Checks if the board is solved (full)
     public Boolean solved() {
         boolean full = true;
@@ -139,4 +145,21 @@ public class Board {
         return full;
     }
 
+    // Effects: Used for testing without random, allows modification of board list. Creates empty
+    // or full board.
+    // Modifies this.
+    public void boardCreate(String fill) {
+        this.board = new ArrayList<>();
+        if (fill.equals("empty")) {
+            board.add("X");
+            board.add("X");
+            board.add("X");
+            board.add("X");
+        } else {
+            board.add("b.B;0.0");
+            board.add("b.B;1.0");
+            board.add("b.B;0.1");
+            board.add("b.B;1.1");
+        }
+    }
 }
