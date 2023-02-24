@@ -60,12 +60,19 @@ class BoardTests {
     }
 
     @Test
-    public void testPieceSetAdder(){
+    public void testPieceSetAdderAndCheckTest(){
         Board testBoard = new Board(2);
         testBoard.genSet(0,0,"B","b");
         List<String> onePiece = new ArrayList<>();
         onePiece.add("b.B;0.0");
         assertEquals(onePiece, testBoard.getPieceSet());
+        List<String> proposedSet = new ArrayList<>();
+        proposedSet.add("b.B;0.0");
+        assertTrue(testBoard.check(proposedSet));
+        testBoard.genSet(0,1,"W","b");
+        assertFalse(testBoard.check(proposedSet));
+        proposedSet.add("b.W;0.1");
+        assertTrue(testBoard.check(proposedSet));
     }
 
     @Test
@@ -85,5 +92,7 @@ class BoardTests {
         assertTrue((!testBoard.getBoard().get(0).equals("X")&&!testBoard.getBoard().get(1).equals("X"))
                 &&(!testBoard.getBoard().get(2).equals("X")&&!testBoard.getBoard().get(3).equals("X")));
     }
+
+
 
 }
