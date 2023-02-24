@@ -57,15 +57,15 @@ public class BoardStats {
         Integer p = 0;
         Integer r = 0;
         for (String piece : piecesGuessed) {
-            if (piece == "K") {
+            if (piece.equals("K")) {
                 k += 1;
-            } else if (piece == "N") {
+            } else if (piece.equals("N")) {
                 n += 1;
-            } else if (piece == "Q") {
+            } else if (piece.equals("Q")) {
                 q += 1;
-            } else if (piece == "B") {
+            } else if (piece.equals("B")) {
                 b += 1;
-            } else if (piece == "P") {
+            } else if (piece.equals("P")) {
                 p += 1;
             } else {
                 r += 1;
