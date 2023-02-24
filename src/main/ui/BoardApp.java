@@ -35,7 +35,6 @@ public class BoardApp {
                 initOptions();
             }
         }
-        keepGoing = false;
         System.out.println("\nGame is finished!");
     }
 
@@ -78,7 +77,7 @@ public class BoardApp {
         System.out.println("What dimensions would you like the board to be (any integer > 1)? "
                 + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8)");
         String dimensionChoice = scan.next();
-        Integer numDimension = Integer.parseInt(dimensionChoice);
+        int numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
         boardStats.boardSize((int) Math.pow(numDimension, 2));
         board.genBoard();
@@ -90,7 +89,7 @@ public class BoardApp {
     // Effects: Runs the recall game with the board instance.
     // Modifies: This
     public void play() {
-        Boolean runningBoard = true;
+        boolean runningBoard = true;
         while (runningBoard) {
             displayRowsAndColumns(listBoard);
             displayInstructions();
@@ -107,12 +106,21 @@ public class BoardApp {
                 }
             }
         }
+    }
+
+    // Effects: Gives user the option to play more, or to exit the entire program.
+    // Modifies: This
+    public void playOrExit() {
         System.out.println("Do you want to quit (type 'q') or play again (type 'play')?");
         scan = new Scanner(System.in);
         String option = scan.next();
         if (option.equals("play")) {
             initOptions();
+        } else {
+            System.out.println("Game is finished!");
+            System.exit(0);
         }
+
     }
 
     // Effects: Displays correct message for user, and updates board statistics.
@@ -129,6 +137,7 @@ public class BoardApp {
         System.out.println("You are incorrect");
         stats.addStat(boardStats);
         seeStats();
+        playOrExit();
     }
 
     // Modifies: This.
@@ -137,6 +146,7 @@ public class BoardApp {
         System.out.println("You have solved the entire board!");
         stats.addStat(boardStats);
         seeStats();
+        playOrExit();
     }
 
 
@@ -152,9 +162,10 @@ public class BoardApp {
                 // to my knowledge.
                 System.out.print("\n Please recall the positions on the board, "
                         + "separate multiple pieces with a comma, also make sure"
-                        + "to use the notation presented in the visual printed, "
-                        + "e.g. b.N;6.5, would indicate a knight on "
-                        + "\n 6th column presented and the 5th row in the board, "
+                        + " to use the notation presented in the visual printed, "
+                        + "e.g. b.N;6.5,w.Q;0.0 would indicate a knight on "
+                        + "\n 6th column presented and the 5th row in the board, alongside a white queen on row 0, "
+                        + " column 0"
                         + "starting from 0 at the top left of the board."
                         + "\n Enter here:");
             }
@@ -170,7 +181,7 @@ public class BoardApp {
         boardStats.addGuess(recall);
         String[] str;
         str = recall.split(",");
-        List<String> separatedCoordinates = new ArrayList<>();
+        List<String> separatedCoordinates;
         separatedCoordinates = Arrays.asList(str);
         return separatedCoordinates;
     }
