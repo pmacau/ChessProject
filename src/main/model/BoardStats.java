@@ -79,7 +79,7 @@ public class BoardStats {
                 b += 1;
             } else if (piece.equals("P")) {
                 p += 1;
-            } else if (piece.equals("R")) {
+            } else {
                 r += 1;
             }
         }
@@ -103,7 +103,8 @@ public class BoardStats {
         }
     }
 
-    // Effects: processes index of most guessed piece and converts it to the piece itself and adds it to statistics.
+    // Effects: processes index of most guessed piece and converts it to the piece itself and adds it to statistics,
+    // if tie chooses from the order king, knight, queen, bishop....
     // Modifies: this
     // Requires: Index less than 5.
     public void mostGuessedPiece(Integer index) {

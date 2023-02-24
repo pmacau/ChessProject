@@ -104,12 +104,22 @@ public class BoardStatsTests {
 
 
     @Test
-    public void emptyGuess(){
+    public void sortGuessByMaxTest(){
         boardStat.sortGuessByMax(0, 0, 0,0,0,0);
         boardStat.getTotalStat();
         assertEquals("N/A", boardStat.getTotalStat().get(7));
         boardStat.sortGuessByMax(1, 0, 0,0,0,0);
         assertEquals("King", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(1, 1, 1,1,1,1);
+        assertEquals("King", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(0, 1, 0,1,0,1);
+        assertEquals("Knight", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(0, 0, 0,0,0,1);
+        assertEquals("Rook", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(0, 0, 1,0,0,1);
+        assertEquals("Queen", boardStat.getTotalStat().get(7));
+        boardStat.sortGuessByMax(0, 0, 0,0,1,1);
+        assertEquals("Pawn", boardStat.getTotalStat().get(7));
     }
 
 
