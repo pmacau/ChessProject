@@ -14,7 +14,8 @@ public class BoardApp {
     private BoardStats boardStats;
     private List<String> listBoard;
 
-
+    // Effects: Runs boardApp interface.
+    // Modifies: This
     public BoardApp() {
         runBoardApp();
     }
@@ -106,26 +107,30 @@ public class BoardApp {
                 }
             }
         }
-        System.out.println("Do you want to quit (type 'q') or go back to main menu (type 'menu')?");
+        System.out.println("Do you want to quit (type 'q') or play again (type 'play')?");
         scan = new Scanner(System.in);
         String option = scan.next();
-        if (option.equals("menu")) {
+        if (option.equals("play")) {
             initOptions();
         }
     }
 
+    // Effects: Displays correct message for user, and updates board statistics.
+    // Modifies: This
     public void correct() {
         System.out.println("You are correct");
         boardStats.streak();
         boardStats.updateGuess();
     }
-
+    // Effects: Displays incorrect message for user, and updates statistics.
+    // Modifies: This
     public void incorrect() {
         System.out.println("You are incorrect");
         stats.addStat(boardStats);
         seeStats();
     }
-
+    // Modifies: This.
+    // Effects: Displays completion for user, and updates statistics.
     public void complete() {
         System.out.println("You have solved the entire board!");
         stats.addStat(boardStats);
@@ -155,6 +160,7 @@ public class BoardApp {
     }
 
     // Effects: Converts the recall into comparable format to Board's specifications.
+    // Modifies: This
     // Used https://beginnersbook.com/2015/05/java-string-to-arraylist-conversion/#:~:text=1)%20First%20split%20the%20string,asList()%20method.
     public List<String> gatherRecalls() {
         scan = new Scanner(System.in);
@@ -168,7 +174,7 @@ public class BoardApp {
     }
 
     // Effects: Displays the board with the current positions.
-// Used as a reference: https://stackoverflow.com/questions/58326516/how-to-print-arraylist-into-rows-and-columns
+    // Used as a reference: https://stackoverflow.com/questions/58326516/how-to-print-arraylist-into-rows-and-columns
     public void displayRowsAndColumns(List<String> board) {
         int rowLength = (int) Math.sqrt(board.size());
         int i = 0;
@@ -183,6 +189,7 @@ public class BoardApp {
         }
     }
 
+    // Effects: Displays stats of all prior games.
     public void seeStats() {
         List<BoardStats> totalStats = stats.returnStats();
         System.out.println("Stats of all prior games:");

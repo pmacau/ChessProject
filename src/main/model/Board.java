@@ -6,7 +6,7 @@ import java.util.Random;
 
 
 public class Board {
-    private Integer slots;
+    private final Integer slots;
     private List<String> board;
     private List<String> pieces;
     private List<String> side;
@@ -62,11 +62,11 @@ public class Board {
     // Requires: Cannot add piece onto an already taken slot.
     public void genNextPos() {
         Random random = new Random();
-        Integer x;
-        Integer y;
-        Integer indexPiece;
-        Integer indexCord;
-        Integer indexTeam;
+        int x;
+        int y;
+        int indexPiece;
+        int indexCord;
+        int indexTeam;
         String team;
         String piece;
         x = random.nextInt((int) Math.sqrt(slots));
@@ -89,14 +89,14 @@ public class Board {
     // Effects: Checks to see if a proposed next state has a duplicate tile assignment.
     // Requires: y * sqrt(slots) + x to have equal or less size than board.
     public boolean duplicateCord(Integer x, Integer y) {
-        return (!("X" == (board.get(y * (int) Math.sqrt(slots) + x))));
+        return (!("X".equals(board.get(y * (int) Math.sqrt(slots) + x))));
     }
 
     // Effects: Generates board
     public void genBoard() {
         genRowsAndColumns();
         genNextPos();
-        // getBoard();
+
 
     }
 
@@ -111,7 +111,7 @@ public class Board {
 
     // Effects: Checks if the recall is correct.
     public Boolean check(List<String> proposedSet) {
-        Boolean equivalence = true;
+        boolean equivalence = true;
 
         if (!proposedSet.containsAll(pieceSet)) {
             equivalence = false;
@@ -122,17 +122,18 @@ public class Board {
         return equivalence;
     }
 
-
+    // Getter
     public List<String> getBoard() {
         return board;
     }
 
     // Effects: Checks if the board is solved (full)
     public Boolean solved() {
-        Boolean full = true;
+        boolean full = true;
         for (String tile : board) {
             if (tile.equals("X")) {
                 full = false;
+                break;
             }
         }
         return full;

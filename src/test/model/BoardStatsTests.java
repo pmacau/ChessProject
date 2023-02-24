@@ -17,12 +17,14 @@ public class BoardStatsTests {
     public void beforeEach(){
         boardStat = new BoardStats();
     }
+    // Tests difficulty storage.
     @Test
     public void difficultyTest(){
         boardStat.difficulty("Hard");
         List<String> strings = boardStat.getTotalStat();
         assertEquals("Hard", strings.get(1));
     }
+    // Tests how a user's guess is added to a list that ultimately sorts into most common piece guessed.
     @Test
     public void addGuessTest(){
         boardStat.addGuess("b.N;6.5");
@@ -37,6 +39,7 @@ public class BoardStatsTests {
         assertEquals(array1, boardStat.getGuess());
     }
 
+    // tests the streak statistic mechanism which just shows how many you got right on a board/in a row.
     @Test
     public void streakTest(){
         boardStat.streak();
@@ -45,7 +48,7 @@ public class BoardStatsTests {
         boardStat.streak();
         assertEquals("2", listStats.get(5));
     }
-
+    // board size statistic mechanism tested.
     @Test
     public void boardSizeTest(){
         boardStat.boardSize(5);
@@ -54,7 +57,7 @@ public class BoardStatsTests {
         boardStat.boardSize(6);
         assertEquals("6", listStats.get(3));
     }
-
+    // similar to addGuess, however tests for the final sorted list which is the most common piece added.
     @Test
     public void updateGuess(){
         boardStat.addGuess("b.N;6.5");
@@ -98,7 +101,12 @@ public class BoardStatsTests {
         testingAllPossibleMax5.addGuess("b.B;1.1");
         assertEquals("Bishop", testingAllPossibleMax5.getTotalStat().get(7));
     }
-
+    @Test
+    public void emptyGuess(){
+        boardStat.sortGuessByMax(0, 0, 0,0,0,0);
+        boardStat.getTotalStat();
+        assertEquals("N/A", boardStat.getTotalStat().get(7));
+    }
 
 
 }
