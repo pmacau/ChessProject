@@ -34,5 +34,31 @@ public class StatsTest {
         assertEquals(statList, testStats.returnStats());
     }
 
+    @Test
+    // testing biggestSize, and maxStreak
+    public void sizesAndMaxStreak(){
+        BoardStats boardStat1 = new BoardStats();
+        BoardStats boardStat2 = new BoardStats();
+        boardStat1.streak();
+        boardStat1.streak(); // 2 is the streak
+        boardStat2.streak(); // 1 is the streak
+        assertEquals(2, boardStat1.getStreak());
+        assertEquals(1, boardStat2.getStreak());
+        boardStat1.boardSize(6); // 6 is the size
+        boardStat2.boardSize(5); // 5 is the size
+        assertEquals(6, boardStat1.getSize());
+        assertEquals(5, boardStat2.getSize());
+        testStats.addStat(boardStat1);
+        testStats.addStat(boardStat2);
+        assertEquals(2, testStats.highestStreak());
+        assertEquals(6, testStats.biggestSize());
+        boardStat2.streak();
+        assertEquals(2, testStats.highestStreak());
+        boardStat2.streak();
+        assertEquals(3, testStats.highestStreak());
+        boardStat2.boardSize(10);
+        assertEquals(10, testStats.biggestSize());
+    }
+
 
 }

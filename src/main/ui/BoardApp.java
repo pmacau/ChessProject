@@ -205,6 +205,9 @@ public class BoardApp {
     // Effects: Displays stats of all prior games.
     public void seeStats() {
         List<BoardStats> totalStats = stats.returnStats();
+        System.out.println("Biggest sized game you've played:" + stats.biggestSize()
+                + "x" + stats.biggestSize());
+        System.out.println("Highest streak you've gotten:" + stats.highestStreak());
         System.out.println("Stats of all prior games:");
         for (BoardStats statistic : totalStats) {
             System.out.println(statistic.getTotalStat());

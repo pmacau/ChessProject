@@ -132,4 +132,14 @@ public class BoardStats {
     public List<String> getTotalStat() {
         return totalStat;
     }
+
+    // Getter
+    public Integer getStreak() {
+        return this.streak;
+    }
+
+    // Getter
+    public Integer getSize() {
+        return  Integer.parseInt(totalStat.get(3));
+    }
 }
