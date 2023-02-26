@@ -14,7 +14,6 @@ public class Board {
 
     // Effects: Constructs a board with the dimensions given, for example, the input 8, would produce a
     // board of 8^2, 64 Tiles.
-    // Requires: dimensions > 0, and must be a perfect square.
     public Board(Integer numTiles) {
         pieces();
         sides();
