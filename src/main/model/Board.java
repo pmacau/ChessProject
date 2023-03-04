@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
+// Contains the board, the positions of pieces, and generates next board state, as well as decides what pieces
+// can be randomly put on a board.
 public class Board {
     private final Integer slots;
     private List<String> board;

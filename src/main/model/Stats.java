@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Contains the statistics for all boards in a list, as well as calculated the highest streak of the session
+// along the largest size of the session. Appears at the end of every board game.
+
 public class Stats {
     private List<BoardStats> stats;
 

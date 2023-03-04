@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Contains the statistics for each board played in the user's session, this includes their streak
+// (how far they progressed through the board), their selected difficulty, and their most guessed piece.
+
 public class BoardStats {
     private Integer streak;
     private final List<String> piecesGuessed;

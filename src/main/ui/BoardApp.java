@@ -165,7 +165,7 @@ public class BoardApp {
                         + " to use the notation presented in the visual printed, "
                         + "e.g. b.N;6.5,w.Q;0.0 would indicate a knight on "
                         + "\n 6th column presented and the 5th row in the board, alongside a white queen on row 0, "
-                        + " column 0"
+                        + "column 0 "
                         + "starting from 0 at the top left of the board."
                         + "\n Enter here:");
             }
