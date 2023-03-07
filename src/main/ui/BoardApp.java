@@ -7,6 +7,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class BoardApp {
     private void runBoardApp() {
         boolean keepGoing = true;
         statInit();
-        System.out.println("Input 'Play' to start the a new game or 'q' to quit");
+        System.out.println("Input 'Play' to start the a new game, 'load' to load previous board, or 'q' to quit");
         while (keepGoing) {
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -42,7 +43,11 @@ public class BoardApp {
                 keepGoing = false;
             } else if (input.equals("Play")) {
                 initOptions();
+            } else {
+                loadBoardState();
+                play();
             }
+
         }
         System.out.println("\nGame is finished!");
     }
@@ -92,7 +97,6 @@ public class BoardApp {
         board.genBoard();
         scan = new Scanner(System.in);
         listBoard = board.getBoard();
-
     }
 
     // Effects: Runs the recall game with the board instance.
@@ -225,7 +229,7 @@ public class BoardApp {
     }
 
     public void saveInGame() {
-        System.out.println("If you'd like to save your game type 'save'");
+        System.out.println("If you'd like to save your game type 'save', if not type anything else");
         scan = new Scanner(System.in);
         String save = scan.next();
         if (save.equals("save")) {
@@ -253,6 +257,12 @@ public class BoardApp {
     // Modifies: This
     // Effects: Loads board state from file.
     public void loadBoardState() {
-
+        try {
+            board = jsonReader.readBoard();
+            System.out.println("Loaded");
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+        listBoard = board.getBoard();
     }
 }

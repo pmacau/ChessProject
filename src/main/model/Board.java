@@ -192,9 +192,8 @@ public class Board implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("boardState", getBoard());
-        json.put("pieces", pieces);
-        json.put("team", side);
+        json.put("boardState", board);
+        json.put("slots", slots);
         json.put("positions", pieceSet);
         return json;
     }

@@ -1,12 +1,14 @@
 package persistence;
 
 import model.Board;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,19 +22,36 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads Board from file and then returns it.
+    // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    // public Board read() throws IOException {
-    //   String jsonData = readFile(source);
-    //   JSONObject jsonObject = new JSONObject(jsonData);
-    // return parseBoard(jsonObject);
-    //   }
-
-
-    // EFFECTS: parses Board from JSON object and returns it
-    private Board parseWorkRoom(JSONObject jsonObject) {
-        return null;
+    public Board readBoard() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseBoard(jsonObject);
     }
+
+
+
+    // EFFECTS: parses workroom from JSON object and returns it
+    private Board parseBoard(JSONObject jsonObject) {
+        Integer slots = jsonObject.getInteger("slots");
+        //String boardState = jsonObject.getString("slots");
+        Board board = new Board(Integer.parseInt(slots));
+        List<String> pieceSet = parsePosition(jsonObject);
+        board.boardLoad(pieceSet);
+        return board;
+    }
+
+    private List<String> parsePosition(JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("positions");
+        List<String> pieceSet = new ArrayList<>();
+        for (Object json : jsonArray) {
+            JSONObject piece = (JSONObject) json;
+            pieceSet.add(String.valueOf(piece));
+        }
+        return pieceSet;
+    }
+
 
     // taken directly from EdX example JsonSerialization.
     // EFFECTS: reads source file as string and returns it

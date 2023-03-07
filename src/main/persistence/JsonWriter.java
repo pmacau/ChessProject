@@ -30,6 +30,7 @@ public class JsonWriter {
     }
 
     public void close() {
+        writer.close();
     }
 
     public void writeBoardStat(BoardStats boardStats) {
