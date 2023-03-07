@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +11,7 @@ import java.util.List;
 // Contains the statistics for all boards in a list, as well as calculated the highest streak of the session
 // along the largest size of the session. Appears at the end of every board game.
 
-public class Stats {
+public class Stats implements Writable {
     private List<BoardStats> stats;
 
     // Modifies: This
@@ -49,5 +53,21 @@ public class Stats {
     public List<BoardStats> returnStats() {
         return stats;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("stats", statsToJson());
+        return json;
+    }
+
+    public JSONArray statsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (BoardStats stat : stats) {
+            jsonArray.put(stat.toJson());
+        }
+        return jsonArray;
+    }
+
 
 }

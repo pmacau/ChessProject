@@ -1,6 +1,9 @@
 package model;
 
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
 // Contains the statistics for each board played in the user's session, this includes their streak
 // (how far they progressed through the board), their selected difficulty, and their most guessed piece.
 
-public class BoardStats {
+public class BoardStats implements Writable {
     private Integer streak;
     private final List<String> piecesGuessed;
     private final List<String> totalStat;
@@ -143,6 +146,18 @@ public class BoardStats {
 
     // Getter
     public Integer getSize() {
-        return  Integer.parseInt(totalStat.get(3));
+        return Integer.parseInt(totalStat.get(3));
     }
+
+    // Effects: Creates Json, with current statistics of the board.
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Difficulty", totalStat.get(1));
+        json.put("Size", totalStat.get(3));
+        json.put("Streak", totalStat.get(5));
+        json.put("Most Guessed Piece", totalStat.get(7));
+        return json;
+    }
+
 }

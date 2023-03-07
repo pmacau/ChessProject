@@ -45,3 +45,5 @@ As a user,
 - I want there to be no duplicate tile assignments to a board. (complete)
 - I want there to be random pieces added to the board. (complete)
 - I want the pieces added to have a random team either white or black. (complete)
+- I want to be able to save my game, so it would save my statistics, my current game, if I so choose. 
+- I want to be able to load my game (if I so choose).

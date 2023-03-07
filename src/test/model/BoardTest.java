@@ -93,6 +93,23 @@ class BoardTest {
                 &&(!testBoard.getBoard().get(2).equals("X")&&!testBoard.getBoard().get(3).equals("X")));
     }
 
+    @Test
+    public void boardLoad(){
+        Board testBoard = new Board(2 );
+        List<String> pieceSet = new ArrayList<>();
+        pieceSet.add("b.B;0.0");
+        pieceSet.add("w.Q;1.0");
+        pieceSet.add("w.K;1.1");
+        pieceSet.add("w.K;0.1");
+        testBoard.boardLoad(pieceSet);
+        List<String> expectedBoard = new ArrayList<>();
+        expectedBoard.add("b.B");
+        expectedBoard.add("w.Q");
+        expectedBoard.add("w.K");
+        expectedBoard.add("w.K");
+        assertEquals(expectedBoard, testBoard.getBoard());
+    }
+
 
 
 }

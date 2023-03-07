@@ -3,20 +3,29 @@ package ui;
 import model.Board;
 import model.BoardStats;
 import model.Stats;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class BoardApp {
+    private static final String JSON_STORE = "./data/workroom.json";
     private Board board;
     private Scanner scan;
     private Integer difficultyTime;
     private Stats stats;
     private BoardStats boardStats;
     private List<String> listBoard;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Effects: Runs boardApp interface.
     // Modifies: This
     public BoardApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runBoardApp();
     }
 
@@ -98,6 +107,7 @@ public class BoardApp {
                 runningBoard = false;
             } else {
                 correct();
+                saveInGame();
                 if (board.solved()) {
                     complete();
                     runningBoard = false;
@@ -212,5 +222,37 @@ public class BoardApp {
         for (BoardStats statistic : totalStats) {
             System.out.println(statistic.getTotalStat());
         }
+    }
+
+    public void saveInGame() {
+        System.out.println("If you'd like to save your game type 'save'");
+        scan = new Scanner(System.in);
+        String save = scan.next();
+        if (save.equals("save")) {
+            try {
+                jsonWriter.open();
+                jsonWriter.writeBoard(board);
+                jsonWriter.close();
+                System.out.println("Saved to" + JSON_STORE);
+            } catch (FileNotFoundException e) {
+                System.out.println("Could not save file");
+            }
+        }
+    }
+
+
+    // Saves stats only, since this is the only relevant object for when the user is not playing a board,
+    // as there is no board active, or boardStats active. Again, saves to file.
+  //  public void saveBoardState() {
+   //     jsonWriter.open();
+   //     jsonWriter.writeStats(stats);
+    //    jsonWriter.close();
+   //     System.out.println("Saved game to " + JSON_STORE);
+   // }
+
+    // Modifies: This
+    // Effects: Loads board state from file.
+    public void loadBoardState() {
+
     }
 }

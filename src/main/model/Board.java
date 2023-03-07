@@ -1,12 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 // Contains the board, the positions of pieces, and generates next board state, as well as decides what pieces
 // can be randomly put on a board.
-public class Board {
+public class Board implements Writable {
     private final Integer slots;
     private List<String> board;
     private List<String> pieces;
@@ -161,5 +164,38 @@ public class Board {
             board.add("b.B;0.1");
             board.add("b.B;1.1");
         }
+    }
+
+    // Effects: Loads the board.
+    // Modifies: This
+    public void boardLoad(List<String> pieceSet) {
+        genRowsAndColumns();
+        int indexCord;
+        int y;
+        int x;
+        String stringX;
+        String stringY;
+        for (String piece : pieceSet) {
+            stringX = piece.substring(piece.length() - 3, piece.length() - 2);
+            stringY = piece.substring(piece.length() - 1);
+            String parsedPiece = piece.substring(0, 3);
+            x = Integer.parseInt(stringX);
+            y = Integer.parseInt(stringY);
+            indexCord = y * (int) Math.sqrt(slots) + x;
+            board.set(indexCord, parsedPiece);
+        }
+
+
+    }
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("boardState", getBoard());
+        json.put("pieces", pieces);
+        json.put("team", side);
+        json.put("positions", pieceSet);
+        return json;
     }
 }
