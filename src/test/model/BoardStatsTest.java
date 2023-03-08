@@ -14,19 +14,21 @@ public class BoardStatsTest {
 
     @BeforeEach
 
-    public void beforeEach(){
+    public void beforeEach() {
         boardStat = new BoardStats();
     }
+
     // Tests difficulty storage.
     @Test
-    public void difficultyTest(){
+    public void difficultyTest() {
         boardStat.difficulty("Hard");
         List<String> strings = boardStat.getTotalStat();
         assertEquals("Hard", strings.get(1));
     }
+
     // Tests how a user's guess is added to a list that ultimately sorts into most common piece guessed.
     @Test
-    public void addGuessTest(){
+    public void addGuessTest() {
         boardStat.addGuess("b.N;6.5");
         List<String> array1 = new ArrayList<>();
         array1.add("N");
@@ -41,25 +43,27 @@ public class BoardStatsTest {
 
     // tests the streak statistic mechanism which just shows how many you got right on a board/in a row.
     @Test
-    public void streakTest(){
+    public void streakTest() {
         boardStat.streak();
         List<String> listStats = boardStat.getTotalStat();
         assertEquals("1", listStats.get(5));
         boardStat.streak();
         assertEquals("2", listStats.get(5));
     }
+
     // board size statistic mechanism tested.
     @Test
-    public void boardSizeTest(){
+    public void boardSizeTest() {
         boardStat.boardSize(5);
         List<String> listStats = boardStat.getTotalStat();
         assertEquals("5", listStats.get(3));
         boardStat.boardSize(6);
         assertEquals("6", listStats.get(3));
     }
+
     // similar to addGuess, however tests for the final sorted list which is the most common piece added.
     @Test
-    public void updateGuess(){
+    public void updateGuess() {
         boardStat.addGuess("b.N;6.5");
         List<String> array1 = new ArrayList<>();
         array1.add("N");
@@ -104,24 +108,36 @@ public class BoardStatsTest {
 
 
     @Test
-    public void sortGuessByMaxTest(){
-        boardStat.sortGuessByMax(0, 0, 0,0,0,0);
+    public void sortGuessByMaxTest() {
+        boardStat.sortGuessByMax(0, 0, 0, 0, 0, 0);
         boardStat.getTotalStat();
         assertEquals("N/A", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(1, 0, 0,0,0,0);
+        boardStat.sortGuessByMax(1, 0, 0, 0, 0, 0);
         assertEquals("King", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(1, 1, 1,1,1,1);
+        boardStat.sortGuessByMax(1, 1, 1, 1, 1, 1);
         assertEquals("King", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(0, 1, 0,1,0,1);
+        boardStat.sortGuessByMax(0, 1, 0, 1, 0, 1);
         assertEquals("Knight", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(0, 0, 0,0,0,1);
+        boardStat.sortGuessByMax(0, 0, 0, 0, 0, 1);
         assertEquals("Rook", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(0, 0, 1,0,0,1);
+        boardStat.sortGuessByMax(0, 0, 1, 0, 0, 1);
         assertEquals("Queen", boardStat.getTotalStat().get(7));
-        boardStat.sortGuessByMax(0, 0, 0,0,1,1);
+        boardStat.sortGuessByMax(0, 0, 0, 0, 1, 1);
         assertEquals("Pawn", boardStat.getTotalStat().get(7));
     }
 
+    @Test
+    public void boardStatsToJson() {
+        BoardStats boardstats = new BoardStats();
+        assertEquals("{\"Streak\":\"0\",\"Difficulty\":\"N/A\",\"Size\":\"0\",\"Most Guessed Piece\":\"N/A\"}"
+                , boardstats.toJson().toString());
+        boardstats.boardSize(4);
+        boardstats.streak();
+        boardstats.streak();
+        boardstats.addGuess("b.B;0.0");
+        assertEquals("{\"Streak\":\"2\",\"Difficulty\":\"N/A\"" +
+                ",\"Size\":\"4\",\"Most Guessed Piece\":\"Bishop\"}", boardstats.toJson().toString());
+    }
 
 
 }

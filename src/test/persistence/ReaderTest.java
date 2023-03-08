@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Board;
+import model.Stats;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,4 +67,21 @@ public class ReaderTest {
             System.out.println("Error in reading");
         }
     }
+
+    @Test
+    public void parseStatisticsTest(){
+        JsonReader reader = new JsonReader("./data/StatisticsReaderTest.json");
+        try {
+            Stats stats = reader.readStats();
+            assertEquals( 1,stats.returnStats().get(0).getSize());
+            assertEquals( 4,stats.returnStats().get(1).getSize());
+            assertEquals( 1,stats.returnStats().get(0).getStreak());
+            assertEquals( 3,stats.returnStats().get(1).getStreak());
+        } catch (IOException e) {
+            System.out.println("Shouldn't receive IOException");
+        }
+
+
+    }
+
 }

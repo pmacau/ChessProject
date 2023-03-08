@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +59,24 @@ public class StatsTest {
         assertEquals(3, testStats.highestStreak());
         boardStat2.boardSize(10);
         assertEquals(10, testStats.biggestSize());
+    }
+
+    @Test
+    public void statsToJson(){
+        Stats stats = new Stats();
+        assertEquals("[]", stats.statsToJson().toString());
+        BoardStats boardStat1 = new BoardStats();
+        BoardStats boardStat2 = new BoardStats();
+        boardStat1.streak();
+        boardStat1.streak(); // 2 is the streak
+        boardStat2.streak(); // 1 is the streak
+        boardStat1.boardSize(6); // 6 is the size
+        boardStat2.boardSize(5); // 5 is the size
+        stats.addStat(boardStat1);
+        stats.addStat(boardStat2);
+        assertEquals("{\"stats\":[{\"Streak\":\"2\",\"Difficulty\":\"N/A\",\"Size\":\"6\"," +
+                "\"Most Guessed Piece\":\"N/A\"},"
+        + "{\"Streak\":\"1\",\"Difficulty\":\"N/A\",\"Size\":\"5\",\"Most Guessed Piece\":\"N/A\"}]}", stats.toJson().toString());
     }
 
 

@@ -1,6 +1,8 @@
 package persistence;
 
 import model.Board;
+import model.BoardStats;
+import model.Stats;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class WritingTest {
     @Test
-    void testWriterInvalidFile() {
+    public void testWriterInvalidFile() {
         try {
             Board b = new Board(2);
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
@@ -24,7 +26,7 @@ public class WritingTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    public void testWriterEmptyWorkroom() {
         try {
             Board b = new Board(2);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
@@ -43,7 +45,7 @@ public class WritingTest {
 
 
     @Test
-    void testWriterGeneralWorkroom() {
+    public void testWriterGeneralWorkroom() {
         try {
             Board b = new Board(2);
             b.genRowsAndColumns();
@@ -64,4 +66,11 @@ public class WritingTest {
             fail("Exception should not have been thrown");
         }
     }
+
+    @Test
+    public void StatsWriting(){
+       // Stats stats = new Stats();
+      //  BoardStats boardStats = new Stats();
+    }
+
 }

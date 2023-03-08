@@ -47,6 +47,13 @@ public class BoardStats implements Writable {
         totalStat.set(3, stringTiles);
     }
 
+    // Effects: Sets most guess for testing purposes.
+    // Modifies: This
+    public void setGuess(String piece) {
+        totalStat.set(7, piece);
+    }
+
+
     // Effects: Changes streak statistic for board, allowing user to see how many they got right on a board.
     // Modifies: This
     public void streak() {

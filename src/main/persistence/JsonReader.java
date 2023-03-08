@@ -1,6 +1,8 @@
 package persistence;
 
 import model.Board;
+import model.BoardStats;
+import model.Stats;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,38 @@ public class JsonReader {
         return parseBoard(jsonObject);
     }
 
+    public Stats readStats() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseStats(jsonObject);
+    }
+
+    // EFFECTS: parses workroom from JSON object and returns it
+    private Stats parseStats(JSONObject jsonObject) {
+        Stats stats = new Stats();
+        JSONArray jsonArray = jsonObject.getJSONArray("stats");
+        for (Object json : jsonArray) {
+            stats.addStat(parseBoardStat(json));
+        }
+        return stats;
+    }
+
+    private BoardStats parseBoardStat(Object json) {
+        BoardStats boardStats = new BoardStats();
+        JSONObject jsonObject = (JSONObject) json;
+        Integer streak = jsonObject.getInt("Streak");
+        int i = 0;
+        for (i = 0; i < streak; i++) {
+            boardStats.streak();
+        }
+        Integer size = jsonObject.getInt("Size");
+        boardStats.boardSize(size);
+        String difficulty = jsonObject.getString("Difficulty");
+        boardStats.difficulty(difficulty);
+        String mostGuessed = jsonObject.getString("Most Guessed Piece");
+        boardStats.setGuess(mostGuessed);
+        return boardStats;
+    }
 
     // EFFECTS: parses workroom from JSON object and returns it
     private Board parseBoard(JSONObject jsonObject) {
