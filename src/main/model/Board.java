@@ -193,7 +193,7 @@ public class Board implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("boardState", board);
-        json.put("slots", slots);
+        json.put("slots", (int) Math.sqrt(slots));
         json.put("positions", pieceSet);
         return json;
     }

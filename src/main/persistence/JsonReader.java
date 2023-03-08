@@ -31,12 +31,10 @@ public class JsonReader {
     }
 
 
-
     // EFFECTS: parses workroom from JSON object and returns it
     private Board parseBoard(JSONObject jsonObject) {
-        Integer slots = jsonObject.getInteger("slots");
-        //String boardState = jsonObject.getString("slots");
-        Board board = new Board(Integer.parseInt(slots));
+        Integer slots = jsonObject.getInt("slots");
+        Board board = new Board(slots);
         List<String> pieceSet = parsePosition(jsonObject);
         board.boardLoad(pieceSet);
         return board;
@@ -45,9 +43,12 @@ public class JsonReader {
     private List<String> parsePosition(JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("positions");
         List<String> pieceSet = new ArrayList<>();
+        int i = 0;
         for (Object json : jsonArray) {
-            JSONObject piece = (JSONObject) json;
-            pieceSet.add(String.valueOf(piece));
+            String piece = jsonArray.getString(i);
+            i++;
+            //JSONObject piece = (JSONObject) json;
+            pieceSet.add(piece);
         }
         return pieceSet;
     }

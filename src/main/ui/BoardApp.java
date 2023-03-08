@@ -61,7 +61,6 @@ public class BoardApp {
     // Effects: packages essential play methods for user.
     public void initOptions() {
         playInit();
-        difficultyUI();
         play();
     }
 
