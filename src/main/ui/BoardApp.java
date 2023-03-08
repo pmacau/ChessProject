@@ -44,6 +44,7 @@ public class BoardApp {
             } else if (input.equals("Play")) {
                 initOptions();
             } else {
+                difficultyTime = 2000;
                 loadBoardState();
                 play();
             }
@@ -61,6 +62,7 @@ public class BoardApp {
     // Effects: packages essential play methods for user.
     public void initOptions() {
         playInit();
+        difficultyUI();
         play();
     }
 

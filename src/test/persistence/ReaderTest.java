@@ -47,6 +47,18 @@ public class ReaderTest {
     }
 
     @Test
+    public void testJSON_emptyBoard(){
+        String emptyBoard = "./data/testReaderEmptyBoard.json";
+        JsonReader jso = new JsonReader(emptyBoard);
+        try { Board board= jso.readBoard();}
+        catch (IOException e){
+            // passes since it should never have an empty position set.
+        }
+
+    }
+
+
+    @Test
     public void parsePositionTest() {
         try {
             jsonReader.readBoard();

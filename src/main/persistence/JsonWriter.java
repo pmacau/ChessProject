@@ -20,6 +20,7 @@ public class JsonWriter {
     public JsonWriter(String jsonStore) {
         this.destination = jsonStore;
     }
+
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }
