@@ -3,6 +3,7 @@ package ui;
 import model.Board;
 import model.BoardStats;
 import model.Stats;
+import org.json.JSONException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -49,9 +50,10 @@ public class BoardApp {
             } else if (input.equals("Play")) {
                 initOptions();
             } else {
-                difficultyTime = 2000;
+                if (isPrevCompleted() == true) {
+                    loadBoardState();
+                }
                 loadBoardState();
-                boardStats = new BoardStats();
                 play();
             }
         }
@@ -80,13 +82,19 @@ public class BoardApp {
         String difficultyChoice = scan.next();
         if (difficultyChoice.equals("Hard")) {
             difficultyTime = 2000;  // purely UI data, does not have any impact on board.
+            board.setDifficulty(2000);
             boardStats.difficulty("Hard");
         } else if (difficultyChoice.equals("Medium")) {
             difficultyTime = 4000;
+            board.setDifficulty(4000);
             boardStats.difficulty("Medium");
         } else {
             difficultyTime = 8000;
+            board.setDifficulty(8000);
             boardStats.difficulty("Easy");
+        }
+        if (difficultyTime == null) {
+            difficultyTime = board.getDifficulty();
         }
     }
 
@@ -94,9 +102,13 @@ public class BoardApp {
     // Modifies: this
     public void playInit() {
         boardStats = new BoardStats();
-        System.out.println("What dimensions would you like the board to be (any integer > 1)? "
-                + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8)");
+        System.out.println("What dimensions would you like the next board to be (any integer > 1)? "
+                + "\n (easy would be 4x4, medium would be 6x6, and hard" + " would be 8x8) "
+                + "or type q to quit");
         String dimensionChoice = scan.next();
+        if (dimensionChoice.equals("q")) {
+            System.exit(0);
+        }
         int numDimension = Integer.parseInt(dimensionChoice);
         board = new Board(numDimension);
         boardStats.boardSize((int) Math.pow(numDimension, 2));
@@ -115,18 +127,17 @@ public class BoardApp {
             if (!board.check(gatherRecalls())) {
                 incorrect();
                 runningBoard = false;
+            } else if (board.solved()) {
+                complete();
+                runningBoard = false;
             } else {
                 correct();
                 saveInGame();
-                if (board.solved()) {
-                    complete();
-                    runningBoard = false;
-                } else {
-                    board.genNextPos();
-                }
+                board.genNextPos();
             }
         }
     }
+
 
     // Effects: Gives user the option to play more, or to exit the entire program.
     // Modifies: This
@@ -137,7 +148,9 @@ public class BoardApp {
         if (option.equals("play")) {
             initOptions();
         } else if (option.equals("save")) {
+            board.boardSetComplete();
             saveStats();
+            saveBoard();
             initOptions();
         } else {
             System.out.println("Game is finished!");
@@ -160,6 +173,7 @@ public class BoardApp {
         System.out.println("You are incorrect");
         stats.addStat(boardStats);
         seeStats();
+       // jsonWriter.writeComplete();
         playOrExit();
     }
 
@@ -167,7 +181,7 @@ public class BoardApp {
     // Effects: Displays completion for user, and updates statistics.
     public void complete() {
         System.out.println("You have solved the entire board!");
-        stats.addStat(boardStats);
+        stats.setStat(boardStats);
         seeStats();
         playOrExit();
     }
@@ -192,7 +206,7 @@ public class BoardApp {
                         + "starting from 0 at the top left of the board."
                         + "\n Enter here:");
             }
-        }, difficultyTime);
+        }, board.getDifficulty());
     }
 
     // Effects: Converts the recall into comparable format to Board's specifications.
@@ -238,22 +252,30 @@ public class BoardApp {
     }
 
     public void saveInGame() {
-        System.out.println("If you'd like to save your game type 'save', if not type anything else");
+        System.out.println("If you'd like to save your game and quit type 'save/q', if not type anything else");
         scan = new Scanner(System.in);
         String save = scan.next();
-        if (save.equals("save")) {
-            try {
-                jsonWriter.open();
-                jsonWriter.writeBoard(board);
-                jsonWriter.close();
-                System.out.println("Saved to" + JSON_STORE);
-            } catch (FileNotFoundException e) {
-                System.out.println("Could not save file");
-            }
+        if (save.equals("save/q")) {
+            stats.addStat(boardStats);
+            saveStats();
+            saveBoard();
+            System.exit(0);
+        }
+    }
+
+    public void saveBoard() {
+        try {
+            jsonWriter.open();
+            jsonWriter.writeBoard(board);
+            jsonWriter.close();
+            System.out.println("Saved to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not save file");
         }
     }
 
     public void saveStats() {
+
         try {
             jsonWriterStat.open();
             jsonWriterStat.writeStats(stats);
@@ -264,15 +286,37 @@ public class BoardApp {
         }
     }
 
+    // Effects: Tells if previous game was completed.
+
+    public boolean isPrevCompleted() {
+        try {
+            return jsonReader.parseComplete();
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     // Modifies: This
     // Effects: Loads board state from file.
     public void loadBoardState() {
         try {
+            if (isPrevCompleted()) {
+                stats = jsonReaderStat.readStats();
+                boardStats = new BoardStats();
+                initOptions();
+            }
             board = jsonReader.readBoard();
+            stats = jsonReaderStat.readStats();
+            boardStats = stats.returnStats().get(stats.returnStats().size() - 1);
+            listBoard = board.getBoard();
             System.out.println("Loaded");
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (JSONException | IOException e) {
+            try {
+                stats = jsonReaderStat.readStats();
+                System.out.println("Loaded");
+            } catch (IOException f) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
         }
-        listBoard = board.getBoard();
     }
 }

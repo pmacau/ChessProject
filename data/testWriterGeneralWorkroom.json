@@ -1,0 +1,14 @@
+{
+    "slots": 2,
+    "boardState": [
+        "w.B",
+        "X",
+        "b.N",
+        "b.N"
+    ],
+    "positions": [
+        "w.B;0.0",
+        "b.N;0.1",
+        "b.N;1.1"
+    ]
+}

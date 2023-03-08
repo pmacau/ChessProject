@@ -118,7 +118,7 @@ class BoardTest {
         List<String> pieceSet = new ArrayList<>();
 
 
-        assertEquals("{\"slots\":2,\"boardState\":[\"X\",\"X\",\"X\",\"X\"],\"positions\":[]}",
+        assertEquals("{\"slots\":2,\"boardState\":[\"X\",\"X\",\"X\",\"X\"],\"positions\":[],\"complete\":false}",
                 board.toJson().toString());
     }
 

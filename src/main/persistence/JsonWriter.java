@@ -45,4 +45,9 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
     }
+
+  //  public void writeComplete() {
+   //     JSONObject json = new JSONObject();
+  //      saveToFile(json.put("complete", true).toString(TAB));
+ //   }
 }

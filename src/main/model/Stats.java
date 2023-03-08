@@ -54,6 +54,10 @@ public class Stats implements Writable {
         return stats;
     }
 
+    public Integer statsSize() {
+        return stats.size();
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -70,4 +74,10 @@ public class Stats implements Writable {
     }
 
 
+    public void setStat(BoardStats boardStats) {
+        if (statsSize() == 0) {
+            stats.add(boardStats);
+        }
+        stats.set(statsSize() - 1, boardStats);
+    }
 }

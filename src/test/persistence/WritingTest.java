@@ -69,7 +69,7 @@ public class WritingTest {
 
     @Test
     public void StatsWriting(){
-       // Stats stats = new Stats();
+      // Stats stats = new Stats();
       //  BoardStats boardStats = new Stats();
     }
 

@@ -48,11 +48,17 @@ public class JsonReader {
         return stats;
     }
 
+    public Boolean parseComplete() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return jsonObject.getBoolean("complete");
+    }
+
     private BoardStats parseBoardStat(Object json) {
         BoardStats boardStats = new BoardStats();
         JSONObject jsonObject = (JSONObject) json;
         Integer streak = jsonObject.getInt("Streak");
-        int i = 0;
+        int i;
         for (i = 0; i < streak; i++) {
             boardStats.streak();
         }
@@ -68,7 +74,9 @@ public class JsonReader {
     // EFFECTS: parses workroom from JSON object and returns it
     private Board parseBoard(JSONObject jsonObject) {
         Integer slots = jsonObject.getInt("slots");
+        Integer difficulty = jsonObject.getInt("difficulty");
         Board board = new Board(slots);
+        board.setDifficulty(difficulty);
         List<String> pieceSet = parsePosition(jsonObject);
         board.boardLoad(pieceSet);
         return board;

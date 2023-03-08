@@ -15,6 +15,8 @@ public class Board implements Writable {
     private List<String> pieces;
     private List<String> side;
     private List<String> pieceSet;
+    private Boolean complete;
+    private Integer difficulty;
 
     // Effects: Constructs a board with the dimensions given, for example, the input 8, would produce a
     // board of 8^2, 64 Tiles.
@@ -22,7 +24,7 @@ public class Board implements Writable {
         pieces();
         sides();
         slots = (int) Math.pow(numTiles, 2);
-
+        this.complete = false;
     }
 
 
@@ -145,8 +147,12 @@ public class Board implements Writable {
                 break;
             }
         }
+        if (full == true) {
+            boardSetComplete();
+        }
         return full;
     }
+
 
     // Effects: Used for testing without random, allows modification of board list. Creates empty
     // or full board.
@@ -188,13 +194,31 @@ public class Board implements Writable {
 
     }
 
+    // Setter
+    public void boardSetComplete() {
+        this.complete = true;
+    }
+
+    public void boardSetCompleteFalse() {
+        this.complete = false;
+    }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("boardState", board);
+        json.put("difficulty", difficulty);
+        json.put("complete", this.complete);
         json.put("slots", (int) Math.sqrt(slots));
         json.put("positions", pieceSet);
         return json;
+    }
+
+    public void setDifficulty(Integer difficultyChoice) {
+        this.difficulty = difficultyChoice;
+    }
+
+    public Integer getDifficulty() {
+        return this.difficulty;
     }
 }
