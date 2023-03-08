@@ -36,6 +36,16 @@ public class StatsTest {
     }
 
     @Test
+    public void statRemove(){
+        BoardStats in = new BoardStats();
+        testStats.addStat(in);
+        testStats.statsRemove(in);
+        List<BoardStats> empty = new ArrayList<>();
+        assertEquals(empty, testStats.returnStats());
+    }
+
+
+    @Test
     // testing biggestSize, and maxStreak
     public void sizesAndMaxStreak(){
         BoardStats boardStat1 = new BoardStats();

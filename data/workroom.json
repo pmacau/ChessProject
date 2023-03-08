@@ -4,9 +4,9 @@
     "boardState": [
         "X",
         "X",
-        "b.B",
-        "X"
+        "X",
+        "w.K"
     ],
-    "positions": ["b.B;0.1"],
+    "positions": ["w.K;1.1"],
     "complete": false
 }

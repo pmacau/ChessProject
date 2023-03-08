@@ -54,6 +54,10 @@ public class Stats implements Writable {
         return stats;
     }
 
+    public void statsRemove(BoardStats i) {
+        stats.remove(i);
+    }
+
     public Integer statsSize() {
         return stats.size();
     }

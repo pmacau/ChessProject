@@ -1,7 +1,23 @@
-{"stats": [{
-    "Guesses": ["b.B;0.1"],
-    "Streak": "1",
-    "Difficulty": "Hard",
-    "Size": "4",
-    "Most Guessed Piece": "Bishop"
-}]}
+{"stats": [
+    {
+        "Guesses": ["w.Ndawd"],
+        "Streak": "0",
+        "Difficulty": "Hard",
+        "Size": "4",
+        "Most Guessed Piece": "Knight"
+    },
+    {
+        "Guesses": ["dwadawdw"],
+        "Streak": "0",
+        "Difficulty": "Hard",
+        "Size": "4",
+        "Most Guessed Piece": "Rook"
+    },
+    {
+        "Guesses": ["w.K;1.1"],
+        "Streak": "1",
+        "Difficulty": "Hard",
+        "Size": "4",
+        "Most Guessed Piece": "King"
+    }
+]}

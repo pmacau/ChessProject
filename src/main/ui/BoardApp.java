@@ -50,9 +50,7 @@ public class BoardApp {
             } else if (input.equals("Play")) {
                 initOptions();
             } else if (input.equals("view")) {
-                loadBoardState();
-                viewGuesses();
-                runBoardApp();
+                view();
             } else {
                 if (isPrevCompleted() == true) {
                     loadBoardState();
@@ -61,12 +59,25 @@ public class BoardApp {
                 play();
             }
         }
-        System.out.println("\nGame is finished!");
+    }
+
+    public void view() {
+        try {
+            stats = jsonReaderStat.readStats();
+            boardStats = new BoardStats();
+            viewGuesses();
+            runBoardApp();
+        } catch (IOException e) {
+            System.out.println("Nothing to read from");
+        }
     }
 
     private void viewGuesses() {
-        List<String> allGuesses = boardStats.getUserGuesses();
-        System.out.println("Previous board guesses " + allGuesses);
+        System.out.println("Previous board guesses ");
+        List<BoardStats> returnStats = stats.returnStats();
+        for (BoardStats boardStat : returnStats) {
+            System.out.println(boardStat.getUserGuesses());
+        }
     }
 
     // Effects: Initializes entire stats class.
@@ -182,7 +193,7 @@ public class BoardApp {
         System.out.println("You are incorrect");
         stats.addStat(boardStats);
         seeStats();
-       // jsonWriter.writeComplete();
+        board.boardSetComplete();
         playOrExit();
     }
 
@@ -255,7 +266,7 @@ public class BoardApp {
         System.out.println("Biggest sized game you've played:" + stats.biggestSize()
                 + "x" + stats.biggestSize());
         System.out.println("Highest streak you've gotten:" + stats.highestStreak());
-        System.out.println("Stats of all prior games:");
+        System.out.println("Stats of all prior sessions:");
         for (BoardStats statistic : totalStats) {
             System.out.println(statistic.getTotalStat());
         }
@@ -318,15 +329,12 @@ public class BoardApp {
             board = jsonReader.readBoard();
             stats = jsonReaderStat.readStats();
             boardStats = stats.returnStats().get(stats.returnStats().size() - 1);
+            stats.statsRemove(boardStats);
             listBoard = board.getBoard();
             System.out.println("Loaded");
         } catch (JSONException | IOException e) {
-            try {
-                stats = jsonReaderStat.readStats();
-                System.out.println("Loaded");
-            } catch (IOException f) {
-                System.out.println("Unable to read from file: " + JSON_STORE);
-            }
+            System.out.println("Error occurred");
         }
     }
+
 }

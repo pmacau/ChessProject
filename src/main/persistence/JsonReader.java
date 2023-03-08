@@ -69,12 +69,11 @@ public class JsonReader {
         String mostGuessed = jsonObject.getString("Most Guessed Piece");
         boardStats.setGuess(mostGuessed);
         JSONArray positions = jsonObject.getJSONArray("Guesses");
-        List<String> allGuesses = new ArrayList<>();
         int x = 0;
         for (Object guess : positions) {
             String g = positions.getString(x);
             x++;
-            allGuesses.add(g);
+            boardStats.userGuesses(g);
         }
         return boardStats;
     }
