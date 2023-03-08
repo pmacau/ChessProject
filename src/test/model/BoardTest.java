@@ -110,6 +110,16 @@ class BoardTest {
         assertEquals(expectedBoard, testBoard.getBoard());
     }
 
+    @Test
+    public void toJson(){
+        Board board = new Board(2);
+        board.genRowsAndColumns();
+        List<String> prevBoard = board.getBoard();
+        List<String> pieceSet = new ArrayList<>();
 
+
+        assertEquals("{\"slots\":2,\"boardState\":[\"X\",\"X\",\"X\",\"X\"],\"positions\":[]}",
+                board.toJson().toString());
+    }
 
 }

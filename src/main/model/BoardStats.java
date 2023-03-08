@@ -25,7 +25,7 @@ public class BoardStats implements Writable {
         totalStat.add("Difficulty");
         totalStat.add("N/A");
         totalStat.add("Size");
-        totalStat.add("N/A");
+        totalStat.add("0");
         totalStat.add("Streak");
         totalStat.add("0");
         totalStat.add("Most Guessed Piece");

@@ -1,5 +1,5 @@
 {
     "slots": 1,
-    "boardState": ["b.R"],
-    "positions": ["b.R;0.0"]
+    "boardState": ["b.Q"],
+    "positions": ["b.Q;0.0"]
 }

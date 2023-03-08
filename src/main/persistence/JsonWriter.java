@@ -38,6 +38,8 @@ public class JsonWriter {
     }
 
     public void writeStats(Stats stats) {
+        JSONObject json = stats.toJson();
+        saveToFile(json.toString(TAB));
     }
 
     private void saveToFile(String json) {

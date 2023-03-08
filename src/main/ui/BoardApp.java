@@ -8,11 +8,11 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class BoardApp {
     private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE1 = "./data/statistics.json";
     private Board board;
     private Scanner scan;
     private Integer difficultyTime;
@@ -21,12 +21,16 @@ public class BoardApp {
     private List<String> listBoard;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private JsonWriter jsonWriterStat;
+    private JsonReader jsonReaderStat;
 
     // Effects: Runs boardApp interface.
     // Modifies: This
     public BoardApp() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        jsonWriterStat = new JsonWriter(JSON_STORE1);
+        jsonReaderStat = new JsonReader(JSON_STORE1);
         runBoardApp();
     }
 
@@ -35,7 +39,8 @@ public class BoardApp {
     private void runBoardApp() {
         boolean keepGoing = true;
         statInit();
-        System.out.println("Input 'Play' to start the a new game, 'load' to load previous board, or 'q' to quit");
+        System.out.println("Input 'Play' to start the a new game, 'load' to load previous board"
+                + " or 'q' to quit");
         while (keepGoing) {
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -46,9 +51,9 @@ public class BoardApp {
             } else {
                 difficultyTime = 2000;
                 loadBoardState();
+                boardStats = new BoardStats();
                 play();
             }
-
         }
         System.out.println("\nGame is finished!");
     }
@@ -126,10 +131,13 @@ public class BoardApp {
     // Effects: Gives user the option to play more, or to exit the entire program.
     // Modifies: This
     public void playOrExit() {
-        System.out.println("Do you want to quit (type 'q') or play again (type 'play')?");
+        System.out.println("Do you want to quit (type 'q'), to save game (type 'save'), or play again (type 'play')?");
         scan = new Scanner(System.in);
         String option = scan.next();
         if (option.equals("play")) {
+            initOptions();
+        } else if (option.equals("save")) {
+            saveStats();
             initOptions();
         } else {
             System.out.println("Game is finished!");
@@ -245,15 +253,16 @@ public class BoardApp {
         }
     }
 
-
-    // Saves stats only, since this is the only relevant object for when the user is not playing a board,
-    // as there is no board active, or boardStats active. Again, saves to file.
-  //  public void saveBoardState() {
-   //     jsonWriter.open();
-   //     jsonWriter.writeStats(stats);
-    //    jsonWriter.close();
-   //     System.out.println("Saved game to " + JSON_STORE);
-   // }
+    public void saveStats() {
+        try {
+            jsonWriterStat.open();
+            jsonWriterStat.writeStats(stats);
+            jsonWriterStat.close();
+            System.out.println("Saved to" + JSON_STORE1);
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not save file");
+        }
+    }
 
     // Modifies: This
     // Effects: Loads board state from file.
