@@ -1,6 +1,7 @@
 {"stats": [{
-    "Streak": "0",
+    "Guesses": ["b.B;0.1"],
+    "Streak": "1",
     "Difficulty": "Hard",
-    "Size": "1",
-    "Most Guessed Piece": "Knight"
+    "Size": "4",
+    "Most Guessed Piece": "Bishop"
 }]}

@@ -41,7 +41,7 @@ public class BoardApp {
         boolean keepGoing = true;
         statInit();
         System.out.println("Input 'Play' to start the a new game, 'load' to load previous board"
-                + " or 'q' to quit");
+                + " 'view' to see previous guesses, or 'q' to quit");
         while (keepGoing) {
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -49,6 +49,10 @@ public class BoardApp {
                 keepGoing = false;
             } else if (input.equals("Play")) {
                 initOptions();
+            } else if (input.equals("view")) {
+                loadBoardState();
+                viewGuesses();
+                runBoardApp();
             } else {
                 if (isPrevCompleted() == true) {
                     loadBoardState();
@@ -58,6 +62,11 @@ public class BoardApp {
             }
         }
         System.out.println("\nGame is finished!");
+    }
+
+    private void viewGuesses() {
+        List<String> allGuesses = boardStats.getUserGuesses();
+        System.out.println("Previous board guesses " + allGuesses);
     }
 
     // Effects: Initializes entire stats class.
@@ -216,6 +225,7 @@ public class BoardApp {
         scan = new Scanner(System.in);
         String recall = scan.next();
         boardStats.addGuess(recall);
+        boardStats.userGuesses(recall);
         String[] str;
         str = recall.split(",");
         List<String> separatedCoordinates;

@@ -15,12 +15,14 @@ public class BoardStats implements Writable {
     private Integer streak;
     private final List<String> piecesGuessed;
     private final List<String> totalStat;
+    private List<String> allGuesses;
 
     // Effects: Constructs board statistics, with empty placeholders.
     // Modifies: This
     public BoardStats() {
         this.streak = 0;
         this.piecesGuessed = new ArrayList<>();
+        this.allGuesses = new ArrayList<>();
         totalStat = new ArrayList<>();
         totalStat.add("Difficulty");
         totalStat.add("N/A");
@@ -136,6 +138,15 @@ public class BoardStats implements Writable {
         }
     }
 
+    public void userGuesses(String guess) {
+        allGuesses.add(guess);
+    }
+
+    public List<String> getUserGuesses() {
+        return allGuesses;
+    }
+
+
     // Getter
     public List<String> getGuess() {
         return piecesGuessed;
@@ -161,9 +172,12 @@ public class BoardStats implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Difficulty", totalStat.get(1));
+        json.put("Difficulty", totalStat.get(1));
         json.put("Size", totalStat.get(3));
         json.put("Streak", totalStat.get(5));
         json.put("Most Guessed Piece", totalStat.get(7));
+        json.put("Guesses", this.allGuesses);
+
         return json;
     }
 

@@ -68,8 +68,17 @@ public class JsonReader {
         boardStats.difficulty(difficulty);
         String mostGuessed = jsonObject.getString("Most Guessed Piece");
         boardStats.setGuess(mostGuessed);
+        JSONArray positions = jsonObject.getJSONArray("Guesses");
+        List<String> allGuesses = new ArrayList<>();
+        int x = 0;
+        for (Object guess : positions) {
+            String g = positions.getString(x);
+            x++;
+            allGuesses.add(g);
+        }
         return boardStats;
     }
+
 
     // EFFECTS: parses workroom from JSON object and returns it
     private Board parseBoard(JSONObject jsonObject) {

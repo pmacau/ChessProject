@@ -1,7 +1,12 @@
 {
     "difficulty": 2000,
-    "slots": 1,
-    "boardState": ["b.N"],
-    "positions": ["b.N;0.0"],
-    "complete": true
+    "slots": 2,
+    "boardState": [
+        "X",
+        "X",
+        "b.B",
+        "X"
+    ],
+    "positions": ["b.B;0.1"],
+    "complete": false
 }
