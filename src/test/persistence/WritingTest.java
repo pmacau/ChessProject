@@ -77,6 +77,8 @@ public class WritingTest {
             writer.open();
             Stats stat = new Stats();
             BoardStats stats1 = new BoardStats();
+            stats1.addPiecesGuessed("Q");
+            stats1.addPiecesGuessed("Q");
             stats1.difficulty("Hard");
             stats1.boardSize(4);
             stats1.streak();
