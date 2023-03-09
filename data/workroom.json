@@ -2,15 +2,14 @@
     "difficulty": 2000,
     "slots": 2,
     "boardState": [
-        "w.R",
-        "w.Q",
-        "w.P",
+        "b.K",
+        "X",
+        "b.B",
         "X"
     ],
     "positions": [
-        "w.R;0.0",
-        "w.Q;1.0",
-        "w.P;0.1"
+        "b.K;0.0",
+        "b.B;0.1"
     ],
     "complete": false
 }

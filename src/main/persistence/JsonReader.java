@@ -60,6 +60,7 @@ public class JsonReader {
     }
 
     // Effects: Parses boardStat json.
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public BoardStats parseBoardStat(Object json) {
         BoardStats boardStats = new BoardStats();
         JSONObject jsonObject = (JSONObject) json;
@@ -74,6 +75,13 @@ public class JsonReader {
         boardStats.difficulty(difficulty);
         String mostGuessed = jsonObject.getString("Most Guessed Piece");
         boardStats.setGuess(mostGuessed);
+        JSONArray guessesForMost = jsonObject.getJSONArray("ForMost");
+        int y = 0;
+        for (Object guess : guessesForMost) {
+            String g = guessesForMost.getString(y);
+            y++;
+            boardStats.addPiecesGuessed(g);
+        }
         JSONArray positions = jsonObject.getJSONArray("Guesses");
         int x = 0;
         for (Object guess : positions) {

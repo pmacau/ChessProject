@@ -175,6 +175,12 @@ public class BoardStats implements Writable {
         return totalStat.get(7);
     }
 
+    //Effects: Adds pieces guessed
+    // Modifies: This
+    public void addPiecesGuessed(String piece) {
+        piecesGuessed.add(piece);
+    }
+
     // Effects: Creates Json, with current statistics of the board.
     @Override
     public JSONObject toJson() {
@@ -185,6 +191,7 @@ public class BoardStats implements Writable {
         json.put("Streak", totalStat.get(5));
         json.put("Most Guessed Piece", totalStat.get(7));
         json.put("Guesses", this.allGuesses);
+        json.put("ForMost", piecesGuessed);
 
         return json;
     }

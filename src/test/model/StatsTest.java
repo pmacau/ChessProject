@@ -93,9 +93,10 @@ public class StatsTest {
         boardStat2.boardSize(5); // 5 is the size
         stats.addStat(boardStat1);
         stats.addStat(boardStat2);
-        assertEquals("{\"stats\":[{\"Guesses\":[],\"Streak\":\"2\",\"Difficulty\":\"N/A\",\"Size\":\"6\"," +
+        assertEquals("{\"stats\":[{\"Guesses\":[],\"Streak\":\"2\",\"ForMost\":[],\"Difficulty\":\"N/A\",\"Size\":\"6\"," +
                 "\"Most Guessed Piece\":\"N/A\"},"
-        + "{\"Guesses\":[],\"Streak\":\"1\",\"Difficulty\":\"N/A\",\"Size\":\"5\",\"Most Guessed Piece\":\"N/A\"}]}", stats.toJson().toString());
+        + "{\"Guesses\":[],\"Streak\":\"1\",\"ForMost\":[],\"Difficulty\":\"N/A\",\"Size\":\"5\",\"Most Guessed Piece\""
+               + ":\"N/A\"}]}", stats.toJson().toString());
     }
 
 

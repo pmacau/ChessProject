@@ -121,6 +121,7 @@ class BoardTest {
         pieces.add("w.R");
         pieces.add("w.Q");
         pieces.add("w.Q");
+        pieces.add("X");
         testBoard.setBoard(pieces);
         testBoard.loadSet();
         List<String> set = new ArrayList<>();
