@@ -181,6 +181,10 @@ public class BoardStats implements Writable {
         piecesGuessed.add(piece);
     }
 
+    public List<String> getPiecesGuessed() {
+        return piecesGuessed;
+    }
+
     // Effects: Creates Json, with current statistics of the board.
     @Override
     public JSONObject toJson() {

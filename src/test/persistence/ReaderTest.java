@@ -99,6 +99,8 @@ public class ReaderTest {
             userGuesses.add("b.B;0.0");
             userGuesses.add("w.B;0.0");
             assertEquals(userGuesses ,boardStats.getUserGuesses());
+            reader.parseMultiple((JSONObject) jsonArray.get(0), boardStats);
+            assertEquals(6, boardStats.getStreak());
         } catch (IOException e){
             System.out.println("Should not be getting IO");
         }

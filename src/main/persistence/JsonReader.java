@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -60,21 +59,26 @@ public class JsonReader {
     }
 
     // Effects: Parses boardStat json.
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+
     public BoardStats parseBoardStat(Object json) {
         BoardStats boardStats = new BoardStats();
         JSONObject jsonObject = (JSONObject) json;
-        Integer streak = jsonObject.getInt("Streak");
-        int i;
-        for (i = 0; i < streak; i++) {
-            boardStats.streak();
-        }
+        parseMultiple(jsonObject, boardStats);
         Integer size = jsonObject.getInt("Size");
         boardStats.boardSize(size);
         String difficulty = jsonObject.getString("Difficulty");
         boardStats.difficulty(difficulty);
         String mostGuessed = jsonObject.getString("Most Guessed Piece");
         boardStats.setGuess(mostGuessed);
+        return boardStats;
+    }
+
+    public void parseMultiple(JSONObject jsonObject, BoardStats boardStats) {
+        Integer streak = jsonObject.getInt("Streak");
+        int i;
+        for (i = 0; i < streak; i++) {
+            boardStats.streak();
+        }
         JSONArray guessesForMost = jsonObject.getJSONArray("ForMost");
         int y = 0;
         for (Object guess : guessesForMost) {
@@ -89,9 +93,7 @@ public class JsonReader {
             x++;
             boardStats.userGuesses(g);
         }
-        return boardStats;
     }
-
 
     // EFFECTS: parses workroom from JSON object and returns it
 

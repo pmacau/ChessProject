@@ -146,8 +146,13 @@ public class BoardStatsTest {
         assertEquals("Bishop", boardStats.getMostGuess());
         boardStats.userGuesses("b.B;0.0");
         List<String> guesses = new ArrayList<>();
+        List<String> empty = new ArrayList<>();
         guesses.add("b.B;0.0");
         assertEquals(guesses, boardStats.getUserGuesses());
+        assertEquals(empty , boardStats.getPiecesGuessed());
+        boardStats.addPiecesGuessed("Q");
+        empty.add("Q");
+       assertEquals(empty, boardStats.getPiecesGuessed());
     }
 
 
