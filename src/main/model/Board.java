@@ -114,6 +114,25 @@ public class Board implements Writable {
         pieceSet.add(pieceCord);
     }
 
+    public void loadSet() {
+        List<String> positions = board;
+        Integer rowLength = (int) Math.sqrt(this.slots) - 1;
+        Integer x = 0;
+        Integer y = 0;
+        for (String position : positions) {
+            if (!position.equals("X")) {
+                pieceSet.add(position.substring(0, 1) + "." + position.substring(2)
+                        + ";" + x + "." + y);
+            }
+            if (x < rowLength) {
+                x++;
+            } else {
+                x = 0;
+                y++;
+            }
+        }
+    }
+
     // Effects: Checks if the recall is correct.
     public Boolean check(List<String> proposedSet) {
         boolean equivalence = true;

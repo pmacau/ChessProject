@@ -56,6 +56,7 @@ public class BoardApp {
                     loadBoardState();
                 }
                 loadBoardState();
+                board.genNextPos();
                 play();
             }
         }
@@ -322,6 +323,7 @@ public class BoardApp {
     public void loadBoardState() {
         try {
             if (isPrevCompleted()) {
+                System.out.println("No game to load since it was completed");
                 stats = jsonReaderStat.readStats();
                 boardStats = new BoardStats();
                 initOptions();
@@ -331,6 +333,8 @@ public class BoardApp {
             boardStats = stats.returnStats().get(stats.returnStats().size() - 1);
             stats.statsRemove(boardStats);
             listBoard = board.getBoard();
+            board.loadSet();
+
             System.out.println("Loaded");
         } catch (JSONException | IOException e) {
             System.out.println("Error occurred");
