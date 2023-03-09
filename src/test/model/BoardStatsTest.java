@@ -129,15 +129,27 @@ public class BoardStatsTest {
     @Test
     public void boardStatsToJson() {
         BoardStats boardstats = new BoardStats();
-        assertEquals("{\"Streak\":\"0\",\"Difficulty\":\"N/A\",\"Size\":\"0\",\"Most Guessed Piece\":\"N/A\"}"
+        assertEquals("{\"Guesses\":[],\"Streak\":\"0\",\"Difficulty\":\"N/A\",\"Size\":\"0\",\"Most Guessed Piece\":\"N/A\"}"
                 , boardstats.toJson().toString());
         boardstats.boardSize(4);
         boardstats.streak();
         boardstats.streak();
         boardstats.addGuess("b.B;0.0");
-        assertEquals("{\"Streak\":\"2\",\"Difficulty\":\"N/A\"" +
+        assertEquals("{\"Guesses\":[],\"Streak\":\"2\",\"Difficulty\":\"N/A\"" +
                 ",\"Size\":\"4\",\"Most Guessed Piece\":\"Bishop\"}", boardstats.toJson().toString());
     }
+
+    @Test
+    public void setGuessTest(){
+        BoardStats boardStats = new BoardStats();
+        boardStats.setGuess("Bishop");
+        assertEquals("Bishop", boardStats.getMostGuess());
+        boardStats.userGuesses("b.B;0.0");
+        List<String> guesses = new ArrayList<>();
+        guesses.add("b.B;0.0");
+        assertEquals(guesses, boardStats.getUserGuesses());
+    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package persistence;
 
 import model.Board;
+import model.BoardStats;
 import model.Stats;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,9 +40,10 @@ public class ReaderTest {
     public void testJSON_StoreFile(){
         try {
             Board board = jsonReader.readBoard();
-            assertEquals(16, board.getSlots());
-            assertEquals("b.P", board.getBoard().get(0));
-            assertEquals("b.B", board.getBoard().get(4));
+            Boolean isComplete = jsonReader.parseComplete();
+            assertEquals(false, board.getComplete());
+            assertEquals(4, board.getSlots());
+            assertEquals("w.R", board.getBoard().get(0));
             assertEquals("X", board.getBoard().get(3));
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -73,15 +76,27 @@ public class ReaderTest {
         JsonReader reader = new JsonReader("./data/StatisticsReaderTest.json");
         try {
             Stats stats = reader.readStats();
-            assertEquals( 1,stats.returnStats().get(0).getSize());
-            assertEquals( 4,stats.returnStats().get(1).getSize());
-            assertEquals( 1,stats.returnStats().get(0).getStreak());
-            assertEquals( 3,stats.returnStats().get(1).getStreak());
+            assertEquals( 4,stats.returnStats().get(0).getSize());
+            assertEquals( 3,stats.returnStats().get(0).getStreak());
         } catch (IOException e) {
             System.out.println("Shouldn't receive IOException");
         }
 
 
+    }
+
+    @Test
+    public void parseBoardTest(){
+        try {
+            JsonReader reader = new JsonReader("./data/testToStats.json");
+            String jsonData = reader.readFile("./data/testToStats.json");
+            JSONObject jsonObject = new JSONObject(jsonData);
+            JSONArray jsonArray = jsonObject.getJSONArray("stats");
+            BoardStats boardStats = reader.parseBoardStat(jsonArray.get(0));
+            assertEquals("Hard" ,boardStats.getTotalStat().get(1));
+        } catch (IOException e){
+            System.out.println("Should not be getting IO");
+        }
     }
 
 }

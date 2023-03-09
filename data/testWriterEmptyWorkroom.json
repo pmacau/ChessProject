@@ -1,5 +1,7 @@
 {
+    "difficulty": 8000,
     "slots": 2,
     "boardState": [],
-    "positions": []
+    "positions": [],
+    "complete": false
 }

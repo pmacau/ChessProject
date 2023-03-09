@@ -5,6 +5,7 @@ import model.BoardStats;
 import model.Stats;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class WritingTest {
     public void testWriterEmptyWorkroom() {
         try {
             Board b = new Board(2);
+            b.setDifficulty(8000);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
             writer.open();
             writer.writeBoard(b);
@@ -48,6 +50,7 @@ public class WritingTest {
     public void testWriterGeneralWorkroom() {
         try {
             Board b = new Board(2);
+            b.setDifficulty(4000);
             b.genRowsAndColumns();
             b.genNextPos();
             b.genNextPos();
@@ -68,9 +71,36 @@ public class WritingTest {
     }
 
     @Test
-    public void StatsWriting(){
-      // Stats stats = new Stats();
-      //  BoardStats boardStats = new Stats();
+    public void StatsWriting() {
+        try {
+            JsonWriter writer = new JsonWriter("./data/testToStats.json");
+            writer.open();
+            Stats stat = new Stats();
+            BoardStats stats1 = new BoardStats();
+            stats1.difficulty("Hard");
+            stats1.boardSize(4);
+            stat.addStat(stats1);
+            writer.writeStats(stat);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Shouldn't happen");
+        }
+
+
+        JsonReader jsonReader = new JsonReader("./data/testToStats.json");
+
+        try {
+            Stats stat3 = jsonReader.readStats();
+            assertEquals(4, stat3.biggestSize());
+
+            assertEquals(0, stat3.highestStreak());
+
+        } catch (
+                IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
     }
 
 }
+

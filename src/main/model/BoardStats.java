@@ -138,10 +138,13 @@ public class BoardStats implements Writable {
         }
     }
 
+    // Effects: Adds guess to user guesses.
+    // Modifies: This
     public void userGuesses(String guess) {
         allGuesses.add(guess);
     }
 
+    // Getter
     public List<String> getUserGuesses() {
         return allGuesses;
     }
@@ -165,6 +168,11 @@ public class BoardStats implements Writable {
     // Getter
     public Integer getSize() {
         return Integer.parseInt(totalStat.get(3));
+    }
+
+    // Getter
+    public String getMostGuess() {
+        return totalStat.get(7);
     }
 
     // Effects: Creates Json, with current statistics of the board.

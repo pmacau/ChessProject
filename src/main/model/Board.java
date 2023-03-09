@@ -49,6 +49,7 @@ public class Board implements Writable {
         side.add("b"); // black
     }
 
+    // Getter
     public int getSlots() {
         return slots;
     }
@@ -114,6 +115,9 @@ public class Board implements Writable {
         pieceSet.add(pieceCord);
     }
 
+    // Effects: Loads pieceSet from given board.
+    // Modifies: This
+    // Requires: board to have positions.
     public void loadSet() {
         List<String> positions = board;
         Integer rowLength = (int) Math.sqrt(this.slots) - 1;
@@ -132,6 +136,12 @@ public class Board implements Writable {
             }
         }
     }
+
+    // Tester
+    public void setBoard(List<String> positions) {
+        this.board = positions;
+    }
+
 
     // Effects: Checks if the recall is correct.
     public Boolean check(List<String> proposedSet) {
@@ -218,10 +228,12 @@ public class Board implements Writable {
         this.complete = true;
     }
 
-    public void boardSetCompleteFalse() {
-        this.complete = false;
+    // Getter
+    public Boolean getComplete() {
+        return this.complete;
     }
 
+    // Effects: Converts board into Json.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -233,10 +245,12 @@ public class Board implements Writable {
         return json;
     }
 
+    // Effects: Sets difficulty of board.
     public void setDifficulty(Integer difficultyChoice) {
         this.difficulty = difficultyChoice;
     }
 
+    // getter
     public Integer getDifficulty() {
         return this.difficulty;
     }

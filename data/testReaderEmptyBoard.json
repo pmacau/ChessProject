@@ -1,12 +1,12 @@
 {
+  "difficulty": 2000,
   "slots": 2,
   "boardState": [
-    "X",
-    "X",
-    "X",
+    "w.R",
+    "w.Q",
+    "w.P",
     "X"
   ],
-  "positions": [
-
-  ]
+  "positions": [],
+  "complete": false
 }

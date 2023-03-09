@@ -54,14 +54,17 @@ public class Stats implements Writable {
         return stats;
     }
 
+    // Effects: Removes certain boardStat from stats.
     public void statsRemove(BoardStats i) {
         stats.remove(i);
     }
 
+    // Getter
     public Integer statsSize() {
         return stats.size();
     }
 
+    // Effects: Converts stats to Json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -69,6 +72,7 @@ public class Stats implements Writable {
         return json;
     }
 
+    // Effects: Converts stats array, into BoardStats to Json.
     public JSONArray statsToJson() {
         JSONArray jsonArray = new JSONArray();
         for (BoardStats stat : stats) {
@@ -78,6 +82,8 @@ public class Stats implements Writable {
     }
 
 
+    // Effects: Sets stat as specific boardStat.
+    // Modifies: This
     public void setStat(BoardStats boardStats) {
         if (statsSize() == 0) {
             stats.add(boardStats);

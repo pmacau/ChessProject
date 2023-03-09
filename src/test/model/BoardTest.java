@@ -108,7 +108,31 @@ class BoardTest {
         expectedBoard.add("w.K");
         expectedBoard.add("w.K");
         assertEquals(expectedBoard, testBoard.getBoard());
+        testBoard.setDifficulty(4000);
+        assertEquals(4000, testBoard.getDifficulty());
+        testBoard.boardSetComplete();
+        assertEquals(testBoard.getComplete(), true);
     }
+
+    @Test
+    public void testLoadSet(){
+        Board testBoard = new Board(2);
+        List<String> pieces = new ArrayList<>();
+        pieces.add("w.R");
+        pieces.add("w.Q");
+        pieces.add("w.Q");
+        testBoard.setBoard(pieces);
+        testBoard.loadSet();
+        List<String> set = new ArrayList<>();
+        set.add("w.R;0.0");
+        set.add("w.Q;1.0");
+        set.add("w.Q;0.1");
+        assertEquals(set, testBoard.getPieceSet());
+
+
+
+    }
+
 
     @Test
     public void toJson(){

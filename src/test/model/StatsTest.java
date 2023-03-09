@@ -33,15 +33,24 @@ public class StatsTest {
         testStats.addStat(input2);
         statList.add(input2);
         assertEquals(statList, testStats.returnStats());
+        assertEquals(2, testStats.statsSize());
     }
 
     @Test
     public void statRemove(){
         BoardStats in = new BoardStats();
         testStats.addStat(in);
+        assertEquals(1 , testStats.statsSize());
         testStats.statsRemove(in);
         List<BoardStats> empty = new ArrayList<>();
         assertEquals(empty, testStats.returnStats());
+        assertEquals(0 , testStats.statsSize());
+        testStats.setStat(in);
+        List<BoardStats> in1 = new ArrayList<>();
+        in1.add(in);
+        assertEquals(in1, testStats.returnStats());
+        testStats.setStat(in);
+        assertEquals(in1, testStats.returnStats());
     }
 
 
@@ -84,9 +93,9 @@ public class StatsTest {
         boardStat2.boardSize(5); // 5 is the size
         stats.addStat(boardStat1);
         stats.addStat(boardStat2);
-        assertEquals("{\"stats\":[{\"Streak\":\"2\",\"Difficulty\":\"N/A\",\"Size\":\"6\"," +
+        assertEquals("{\"stats\":[{\"Guesses\":[],\"Streak\":\"2\",\"Difficulty\":\"N/A\",\"Size\":\"6\"," +
                 "\"Most Guessed Piece\":\"N/A\"},"
-        + "{\"Streak\":\"1\",\"Difficulty\":\"N/A\",\"Size\":\"5\",\"Most Guessed Piece\":\"N/A\"}]}", stats.toJson().toString());
+        + "{\"Guesses\":[],\"Streak\":\"1\",\"Difficulty\":\"N/A\",\"Size\":\"5\",\"Most Guessed Piece\":\"N/A\"}]}", stats.toJson().toString());
     }
 
 

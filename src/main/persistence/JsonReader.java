@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 
 // Note: Structured from JsonSerialization example.
+// Reads Json files.
 public class JsonReader {
     private String source;
 
@@ -32,6 +33,8 @@ public class JsonReader {
         return parseBoard(jsonObject);
     }
 
+    // Effects: reads stats, and throws
+    // IOException if an error occurs reading data from file
     public Stats readStats() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -48,13 +51,16 @@ public class JsonReader {
         return stats;
     }
 
+
+    // Effects: Sees if board is complete.
     public Boolean parseComplete() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return jsonObject.getBoolean("complete");
     }
 
-    private BoardStats parseBoardStat(Object json) {
+    // Effects: Parses boardStat json.
+    public BoardStats parseBoardStat(Object json) {
         BoardStats boardStats = new BoardStats();
         JSONObject jsonObject = (JSONObject) json;
         Integer streak = jsonObject.getInt("Streak");
@@ -80,7 +86,8 @@ public class JsonReader {
 
 
     // EFFECTS: parses workroom from JSON object and returns it
-    private Board parseBoard(JSONObject jsonObject) {
+
+    public Board parseBoard(JSONObject jsonObject) {
         Integer slots = jsonObject.getInt("slots");
         Integer difficulty = jsonObject.getInt("difficulty");
         Board board = new Board(slots);
@@ -90,7 +97,8 @@ public class JsonReader {
         return board;
     }
 
-    private List<String> parsePosition(JSONObject jsonObject) {
+    // Effects: Parses positions, and retrieves pieceSet.
+    public List<String> parsePosition(JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("positions");
         List<String> pieceSet = new ArrayList<>();
         int i = 0;
@@ -106,7 +114,7 @@ public class JsonReader {
 
     // taken directly from EdX example JsonSerialization.
     // EFFECTS: reads source file as string and returns it
-    private String readFile(String source) throws IOException {
+    public String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
