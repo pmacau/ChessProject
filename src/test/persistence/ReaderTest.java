@@ -94,6 +94,11 @@ public class ReaderTest {
             JSONArray jsonArray = jsonObject.getJSONArray("stats");
             BoardStats boardStats = reader.parseBoardStat(jsonArray.get(0));
             assertEquals("Hard" ,boardStats.getTotalStat().get(1));
+            assertEquals("3" ,boardStats.getTotalStat().get(5));
+            List<String> userGuesses = new ArrayList<>();
+            userGuesses.add("b.B;0.0");
+            userGuesses.add("w.B;0.0");
+            assertEquals(userGuesses ,boardStats.getUserGuesses());
         } catch (IOException e){
             System.out.println("Should not be getting IO");
         }

@@ -79,6 +79,11 @@ public class WritingTest {
             BoardStats stats1 = new BoardStats();
             stats1.difficulty("Hard");
             stats1.boardSize(4);
+            stats1.streak();
+            stats1.streak();
+            stats1.streak();
+            stats1.userGuesses("b.B;0.0");
+            stats1.userGuesses("w.B;0.0");
             stat.addStat(stats1);
             writer.writeStats(stat);
             writer.close();
@@ -93,7 +98,7 @@ public class WritingTest {
             Stats stat3 = jsonReader.readStats();
             assertEquals(4, stat3.biggestSize());
 
-            assertEquals(0, stat3.highestStreak());
+            assertEquals(3, stat3.highestStreak());
 
         } catch (
                 IOException ex) {
