@@ -12,8 +12,8 @@ import java.util.Random;
 public class Board implements Writable {
     private final Integer slots;
     private List<String> board;
-    private List<String> pieces;
-    private List<String> side;
+    private static final List<String> pieces = new ArrayList<>();
+    private static final List<String> side = new ArrayList<>();
     private List<String> pieceSet;
     private Boolean complete;
     private Integer difficulty;
@@ -31,7 +31,7 @@ public class Board implements Writable {
     // Effects: Creates the set of chess pieces in rotation
     // Modifies: This
     public void pieces() {
-        pieces = new ArrayList<>();
+        // pieces = new ArrayList<>();
         pieces.add("P"); // pawn
         pieces.add("B"); // bishop
         pieces.add("R"); // rook
@@ -44,7 +44,7 @@ public class Board implements Writable {
     // Effects: Creates black and white, which is the two sides the pieces can be on.
     // Modifies: This
     public void sides() {
-        side = new ArrayList<>();
+       // side = new ArrayList<>();
         side.add("w"); // white
         side.add("b"); // black
     }

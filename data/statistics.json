@@ -1,24 +1,16 @@
-{"stats": [
-    {
-        "Guesses": [
-            "w.P;1.0",
-            "kdmawkdmakwd"
-        ],
-        "Streak": "1",
-        "ForMost": [
-            "P",
-            "m"
-        ],
-        "Difficulty": "Hard",
-        "Size": "4",
-        "Most Guessed Piece": "Pawn"
-    },
-    {
-        "Guesses": ["b.K;0.1"],
-        "Streak": "1",
-        "ForMost": ["K"],
-        "Difficulty": "Hard",
-        "Size": "4",
-        "Most Guessed Piece": "King"
-    }
-]}
+{"stats": [{
+    "Guesses": [
+        "w.N;1.0",
+        "w.N;1.0,w.N;0.1",
+        "w.B;0.0,w.N;1.0,w.N;0.1"
+    ],
+    "Streak": "3",
+    "ForMost": [
+        "N",
+        "N",
+        "N"
+    ],
+    "Difficulty": "Hard",
+    "Size": "4",
+    "Most Guessed Piece": "Knight"
+}]}
