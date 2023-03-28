@@ -4,17 +4,10 @@ import model.Board;
 import model.BoardStats;
 import model.Stats;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,6 +32,9 @@ public class MainGUI implements ActionListener {
     private Color whiteTile;
     private JPanel boardPanel;
     private PiecesGUI piecesGUI;
+    private JButton check;
+    private Boolean going;
+    private JButton buttonMenu;
 
 
     public MainGUI() {
@@ -54,12 +50,14 @@ public class MainGUI implements ActionListener {
         buttonView = new JButton("View");
         buttonLoad = new JButton("Load");
         buttonQuit = new JButton("Quit");
+        buttonMenu = new JButton("Main Menu");
         buttonQuit.addActionListener(this);
         buttonView.addActionListener(this);
         buttonLoad.addActionListener(this);
         buttonPlay.addActionListener(this);
+        buttonMenu.addActionListener(this);
         genColour();
-
+        going = true;
     }
 
     public void genColour() {
@@ -78,6 +76,7 @@ public class MainGUI implements ActionListener {
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Gui");
+        frame.setBounds(0, 0, 1800, 1800);
         frame.pack();
         frame.setVisible(true);
     }
@@ -116,42 +115,31 @@ public class MainGUI implements ActionListener {
 
 
     public void runPlay() {
-        Boolean going = true;
-        board.genBoard();
-        while (going) {
-            play();
-            clearAndPrompt();
-            if (!board.check(verifyRecalls())) {
-                incorrect();
-                going = false;
-            } else if (board.getComplete()) {
-                complete();
-                going = false;
-            } else {
-                board.genNextPos();
-            }
+        initPlayUI();
+        clearAndPrompt();
 
-        }
     }
 
 
-
-
-
-    private List<String> verifyRecalls() {
-        List<String> pieceSet = new ArrayList<>();
-        pieceSet.add("b.B;0.0");
-        pieceSet.add("w.Q;1.0");
-        pieceSet.add("w.K;1.1");
-        pieceSet.add("w.K;0.1");
-        return pieceSet;
-    }
+//    private List<String> verifyRecalls() {
+//        List<String> pieceSet = new ArrayList<>();
+//        pieceSet.add("b.B;0.0");
+//        pieceSet.add("w.Q;1.0");
+//        pieceSet.add("w.K;1.1");
+//        pieceSet.add("w.K;0.1");
+//        return pieceSet;
+//    }
 
     private void clearAndPrompt() {
         java.util.Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-                gamePanel.remove(gamePanel.highestLayer());
+                for (Component comp : gamePanel.getComponents()) {
+                    if (comp instanceof JLabel) {
+                        gamePanel.remove(comp);
+                    }
+
+                }
                 frame.getContentPane().validate();
                 frame.getContentPane().repaint();
                 piecesGUI.createTileButtons();
@@ -161,27 +149,56 @@ public class MainGUI implements ActionListener {
     }
 
     private void complete() {
-
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        frame.setLayout(null);
+        JPanel panelQuit = new JPanel();
+        JPanel panelMenu = new JPanel();
+        panelQuit.add(buttonQuit);
+        panelMenu.add(buttonMenu);
+        panelQuit.setBounds(200, 328, 100, 128);
+        panelMenu.setBounds(200, 200, 100, 128);
+        frame.add(panelQuit);
+        frame.add(panelMenu);
+        frame.setVisible(true);
     }
 
 
     private void incorrect() {
     }
 
-    public void play() {
-        initPlayUI();
-    }
 
     public void initPlayUI() {
         frame.getContentPane().removeAll();
         //frame.setLayout(null);
-        frame.setBounds(10, 10, 90 * dimension, 90 * dimension);
+        frame.setBounds(10, 10, 90 * dimension + 500, 90 * dimension + 500);
         frame.repaint();
         displayBoard();
+        displayCheck();
         displayStreak();
         piecesGUI.displayPieces();
         piecesGUI.displayUserWhiteSelection();
         piecesGUI.displayUserBlackSelection();
+        piecesGUI.actionListeners();
+        frame.setVisible(true);
+    }
+
+    public void displayCheck() {
+        check = new JButton("Check");
+        check.addActionListener(this);
+        check.setBounds(64 * dimension + 32, 128 + 64 + 64 + 64 + 128, 160, 64);
+        gamePanel.add(check);
+    }
+
+    public void check() {
+        if (board.solved()) {
+            complete();
+        } else if (board.check(piecesGUI.getProposedSet())) {
+            board.genNextPos();
+            runPlay();
+        } else {
+            incorrect();
+        }
     }
 
 
@@ -218,7 +235,6 @@ public class MainGUI implements ActionListener {
         boardPanel.setBounds(0, 0, 64 * dimension + 500, 64 * dimension + 500);
         gamePanel.add(boardPanel, gamePanel.lowestLayer());
         frame.add(gamePanel);
-        frame.setVisible(true);
         piecesGUI = new PiecesGUI(gamePanel, frame, board);
         try {
             piecesGUI.generatePieces();
@@ -240,12 +256,24 @@ public class MainGUI implements ActionListener {
             } else if (difficultyChoice.getText().equals("Easy")) {
                 board.setDifficulty(8000);
             }
+            board.genBoard();
             runPlay();
         } else if (actionSource.equals(buttonPlay)) {
             playOptions();
         } else if (actionSource.equals(buttonQuit)) {
             System.exit(0);
+        } else if (actionSource.equals(check)) {
+            check();
+        } else if (actionSource.equals(buttonMenu)) {
+            restart();
         }
+    }
+
+    public void restart() {
+        frame.setVisible(false);
+        init();
+        mainMenu();
+
     }
 
 
