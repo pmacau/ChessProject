@@ -1,16 +1,8 @@
 {"stats": [{
-    "Guesses": [
-        "w.N;1.0",
-        "w.N;1.0,w.N;0.1",
-        "w.B;0.0,w.N;1.0,w.N;0.1"
-    ],
-    "Streak": "3",
-    "ForMost": [
-        "N",
-        "N",
-        "N"
-    ],
+    "Guesses": [],
+    "Streak": "1",
+    "ForMost": ["R"],
     "Difficulty": "Hard",
-    "Size": "4",
-    "Most Guessed Piece": "Knight"
+    "Size": "2",
+    "Most Guessed Piece": "Rook"
 }]}

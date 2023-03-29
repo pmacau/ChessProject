@@ -2,6 +2,7 @@ package ui;
 
 
 import model.Board;
+import model.BoardStats;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -51,13 +52,16 @@ public class PiecesGUI implements ActionListener {
     private List<JButton> tiles;
     private List<String> proposedSet;
     private List<String> piecesOnBoard;
+    private BoardStats stats;
+    private List<String> guesses;
 
 
-    public PiecesGUI(JLayeredPane gamePanel, JFrame frame, Board board) {
+    public PiecesGUI(JLayeredPane gamePanel, JFrame frame, Board board, BoardStats stats) {
         this.gamePanel = gamePanel;
         this.frame = frame;
         this.board = board;
         this.dimension = (int) Math.sqrt(board.getSlots());
+        this.stats = stats;
         tiles = new ArrayList<>();
         proposedSet = new ArrayList<>();
     }
@@ -224,28 +228,69 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+
     public void placeWhitePiece(Integer i) {
-        String coordinate = coordinateConversion(i);
         if (currentPieceSelected == 0) {
-            addPiece(new JLabel(new ImageIcon(whiteKing)), i);
-            proposedSet.add("w.K" + ";" + coordinate);
+            whiteKing(i);
         } else if (currentPieceSelected == 1) {
-            addPiece(new JLabel(new ImageIcon(whiteQueen)), i);
-            proposedSet.add("w.Q" + ";" + coordinate);
+            whiteQueen(i);
         } else if (currentPieceSelected == 2) {
-            addPiece(new JLabel(new ImageIcon(whiteBishop)), i);
-            proposedSet.add("w.B" + ";" + coordinate);
+            whiteBishop(i);
         } else if (currentPieceSelected == 3) {
-            addPiece(new JLabel(new ImageIcon(whiteKnight)), i);
-            proposedSet.add("w.N" + ";" + coordinate);
+            whiteKnight(i);
         } else if (currentPieceSelected == 4) {
-            addPiece(new JLabel(new ImageIcon(whiteRook)), i);
-            proposedSet.add("w.R" + ";" + coordinate);
+            whiteRook(i);
         } else if (currentPieceSelected == 5) {
-            addPiece(new JLabel(new ImageIcon(whitePawn)), i);
-            proposedSet.add("w.P" + ";" + coordinate);
+            whitePawn(i);
         }
 
+    }
+
+    private void whitePawn(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whitePawn)), i);
+        proposedSet.add("w.P" + ";" + coordinate);
+        stats.addGuess("w.P;0.0");
+    }
+
+    private void whiteRook(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whiteRook)), i);
+        proposedSet.add("w.R" + ";" + coordinate);
+        stats.addGuess("w.R;0.0");
+    }
+
+    private void whiteKnight(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whiteKnight)), i);
+        proposedSet.add("w.N" + ";" + coordinate);
+        stats.addGuess("w.N;0.0");
+    }
+
+    private void whiteBishop(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whiteBishop)), i);
+        proposedSet.add("w.B" + ";" + coordinate);
+        stats.addGuess("w.B;0.0");
+    }
+
+    private void whiteKing(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whiteKing)), i);
+        proposedSet.add("w.K" + ";" + coordinate);
+        stats.addGuess("w.K;0.0");
+    }
+
+
+    private void whiteQueen(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(whiteQueen)), i);
+        proposedSet.add("w.Q" + ";" + coordinate);
+        stats.addGuess("w.Q;0.0");
+    }
+
+    private String getGuess() {
+        return null;
     }
 
     private String coordinateConversion(Integer i) {
@@ -255,26 +300,61 @@ public class PiecesGUI implements ActionListener {
     }
 
     public void placeBlackPiece(Integer i) {
-        String coordinate = coordinateConversion(i);
         if (currentPieceSelected == 6) {
-            addPiece(new JLabel(new ImageIcon(blackKing)), i);
-            proposedSet.add("b.K" + ";" + coordinate);
+            blackKing(i);
         } else if (currentPieceSelected == 7) {
-            addPiece(new JLabel(new ImageIcon(blackQueen)), i);
-            proposedSet.add("b.Q" + ";" + coordinate);
+            blackQueen(i);
         } else if (currentPieceSelected == 8) {
-            addPiece(new JLabel(new ImageIcon(blackBishop)), i);
-            proposedSet.add("b.B" + ";" + coordinate);
+            blackBishop(i);
         } else if (currentPieceSelected == 9) {
-            addPiece(new JLabel(new ImageIcon(blackKnight)), i);
-            proposedSet.add("b.N" + ";" + coordinate);
+            blackKnight(i);
         } else if (currentPieceSelected == 10) {
-            addPiece(new JLabel(new ImageIcon(blackRook)), i);
-            proposedSet.add("b.R" + ";" + coordinate);
+            blackRook(i);
         } else if (currentPieceSelected == 11) {
-            addPiece(new JLabel(new ImageIcon(blackPawn)), i);
-            proposedSet.add("b.P" + ";" + coordinate);
+            blackPawn(i);
         }
+    }
+
+    private void blackPawn(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackPawn)), i);
+        proposedSet.add("b.P" + ";" + coordinate);
+        stats.addGuess("w.P;0.0");
+    }
+
+    private void blackRook(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackRook)), i);
+        proposedSet.add("b.R" + ";" + coordinate);
+        stats.addGuess("w.R;0.0");
+    }
+
+    private void blackKnight(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackKnight)), i);
+        proposedSet.add("b.N" + ";" + coordinate);
+        stats.addGuess("w.N;0.0");
+    }
+
+    private void blackBishop(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackBishop)), i);
+        proposedSet.add("b.B" + ";" + coordinate);
+        stats.addGuess("w.B;0.0");
+    }
+
+    private void blackQueen(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackQueen)), i);
+        proposedSet.add("b.Q" + ";" + coordinate);
+        stats.addGuess("w.Q;0.0");
+    }
+
+    public void blackKing(Integer i) {
+        String coordinate = coordinateConversion(i);
+        addPiece(new JLabel(new ImageIcon(blackKing)), i);
+        proposedSet.add("b.K" + ";" + coordinate);
+        stats.addGuess("w.K;0.0");
     }
 
     public List<String> getProposedSet() {
