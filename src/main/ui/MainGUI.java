@@ -18,6 +18,7 @@ import java.util.TimerTask;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+// Graphical user interface containing most of the user displays.
 public class MainGUI implements ActionListener {
     // private final JLabel label;
     private JButton buttonPlay;
@@ -47,10 +48,11 @@ public class MainGUI implements ActionListener {
     private JsonWriter jsonWriterStat;
     private JsonReader jsonReaderStat;
     private Scanner scan;
+    private JButton buttonSave;
     private static final String JSON_STORE = "./data/workroom.json";
     private static final String JSON_STORE1 = "./data/statistics.json";
 
-
+    // Effects: Begins the GUI
     public MainGUI() {
         loadAndSaveinit();
         init();
@@ -58,6 +60,8 @@ public class MainGUI implements ActionListener {
         mainMenu();
     }
 
+    // Effects: Initializes JSON Stores.
+    // Modifies: This
     public void loadAndSaveinit() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -65,12 +69,15 @@ public class MainGUI implements ActionListener {
         jsonReaderStat = new JsonReader(JSON_STORE1);
     }
 
+    // Effects: Initializes frame, and important buttons.
+    // Modifies: This
     public void init() {
         frame = new JFrame();
         panel = new JPanel();
         buttonPlay = new JButton("Play");
         view();
         load();
+        saveButton();
         buttonQuit = new JButton("Quit");
         buttonMenu = new JButton("Main Menu");
         buttonQuit.addActionListener(this);
@@ -82,6 +89,21 @@ public class MainGUI implements ActionListener {
         going = true;
     }
 
+    // Effects: If pressed saves the given state.
+    // Modifies: This.
+    public void saveButton() {
+        buttonSave = new JButton("Save");
+        buttonSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveStats();
+                saveBoard();
+            }
+        });
+    }
+
+    // Effects: If pressed goes to view page.
+    // Modifies: This
     public void view() {
         buttonView = new JButton("View");
         buttonView.addActionListener(new ActionListener() {
@@ -92,10 +114,35 @@ public class MainGUI implements ActionListener {
         });
     }
 
+    // Effects: Displays user guesses
+    // Modifies: This
     public void viewDisplay() {
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        JScrollPane userGuesses = new JScrollPane();
+        userGuesses.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        userGuesses.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JTextArea o = new JTextArea();
+        String str = "";
+        for (BoardStats boardStat : stats.returnStats()) {
+            for (String s : boardStat.getUserGuesses()) {
+                str = str + s;
+            }
+            o.append(str);
+        }
+        //o = new JTextArea("Test");
+        userGuesses.add(o);
+        userGuesses.setViewportView(o);
+        frame.add(userGuesses, BorderLayout.CENTER);
+        frame.add(buttonMenu, BorderLayout.EAST);
+        userGuesses.setBounds(300, 300, 300, 180);
+        userGuesses.setEnabled(true);
+        frame.setVisible(true);
 
     }
 
+    // Effects: Loads last save if pressed
+    // Modifies: This
     public void load() {
         buttonLoad = new JButton("Load");
         buttonLoad.addActionListener(new ActionListener() {
@@ -107,23 +154,29 @@ public class MainGUI implements ActionListener {
 
     }
 
-
+    // Effects: Initializes stats
+    // Modifies: This
     public void statInit() {
         stats = new Stats();
     }
 
+    // Effects: Generates colours for tiles.
+    // Modifies: This
     public void genColour() {
         brownTile = new Color(160, 77, 34, 123);
         whiteTile = new Color(255, 255, 255, 123);
     }
 
 
+    // Effects: Displays main menu.
+    // Modifies: This
     public void mainMenu() {
         panel.add(buttonPlay);
         panel.add(buttonView);
         panel.add(buttonLoad);
+        panel.add(buttonSave);
         panel.add(buttonQuit);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
         panel.setLayout(new GridLayout(0, 1));
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,19 +186,23 @@ public class MainGUI implements ActionListener {
         frame.setVisible(true);
     }
 
+    // Effects: PlayOptions display
+    // Modifies: This
     public void playOptions() {
         frame.getContentPane().removeAll();
         frame.repaint();
         playOptions = new JPanel();
         frame.add(playOptions);
         JLabel instructions = new JLabel("What dimensions would you like the next board to be (any integer > 1)? \n"
-                + " (easy would be 4x4, medium would be 6x6, and hard would be 8x8)");
+                + " (easy would be 4x4, medium would be 6x6, and hard would be 8x8, must be even)");
         playOptions.add(instructions);
         diffAndDim();
         beginPlay();
         frame.setVisible(true);
     }
 
+    // Effects: Dimension options display
+    // Modifies: this
     public void diffAndDim() {
         JLabel dimensions = new JLabel("Dimensions:");
         playOptions.add(dimensions);
@@ -159,6 +216,8 @@ public class MainGUI implements ActionListener {
         playOptions.add(difficultyChoice);
     }
 
+    // Effects: Begins play
+    // Modifies: This
     public void beginPlay() {
         playButton = new JButton("Click to play");
         playOptions.add(playButton);
@@ -166,6 +225,8 @@ public class MainGUI implements ActionListener {
     }
 
 
+    // Effects: Runs play
+    // Modifies: This
     public void runPlay() {
         difficultyAndSizeSetter();
         initPlayUI();
@@ -173,6 +234,8 @@ public class MainGUI implements ActionListener {
 
     }
 
+    // Effects: sets the size and gets the difficulty from the board.
+    // Modifies: This
     public void difficultyAndSizeSetter() {
         boardstats.boardSize(dimension);
         if (board.getDifficulty() == 8000) {
@@ -184,16 +247,8 @@ public class MainGUI implements ActionListener {
         }
     }
 
-
-//    private List<String> verifyRecalls() {
-//        List<String> pieceSet = new ArrayList<>();
-//        pieceSet.add("b.B;0.0");
-//        pieceSet.add("w.Q;1.0");
-//        pieceSet.add("w.K;1.1");
-//        pieceSet.add("w.K;0.1");
-//        return pieceSet;
-//    }
-
+    // Effects: Clears the board.
+    // Modifies: This.
     private void clearAndPrompt() {
         java.util.Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -212,20 +267,19 @@ public class MainGUI implements ActionListener {
         }, board.getDifficulty());
     }
 
+    // Effects: Develops completion screen.
+    // Modifies: This
     private void complete() {
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setLayout(new BorderLayout());
         displayAndFinalizeStats();
         displayCompleteEndGameOptions();
-        displayReset();
         frame.setVisible(true);
     }
 
-    private void displayReset() {
-
-    }
-
+    // Effects: Displays complete options for user.
+    // Modifies: This.
     public void displayCompleteEndGameOptions() {
         JPanel centerPane = new JPanel();
         clearStatisticsDisplay(centerPane);
@@ -242,6 +296,8 @@ public class MainGUI implements ActionListener {
         frame.add(centerPane, BorderLayout.CENTER);
     }
 
+    // Effects: Clears stats if pressed.
+    // Modifies: This
     public void clearStatisticsDisplay(JPanel centerPane) {
         JPanel panelReset = new JPanel();
         JButton reset = new JButton("Clear statistics");
@@ -257,6 +313,8 @@ public class MainGUI implements ActionListener {
         centerPane.add(panelReset);
     }
 
+    // Effects: Displays save button.
+    // Modifies: This
     public void save(JPanel centerPane) {
         JPanel panelSave = new JPanel();
         JButton save = new JButton("Save");
@@ -271,12 +329,14 @@ public class MainGUI implements ActionListener {
         centerPane.add(panelSave);
     }
 
-
+    // Effects: Clears stat.
+    // Modifies: This
     private void clearStat() {
         boardstats = new BoardStats();
     }
 
-
+    // Effects: When user is incorrect, develops screen and options.
+    // Modifies: This.
     private void incorrect() {
         frame.getContentPane().removeAll();
         frame.repaint();
@@ -288,10 +348,11 @@ public class MainGUI implements ActionListener {
         frame.getContentPane().setLayout(new BorderLayout());
         displayIncorrectEndGameOptions();
         displayAndFinalizeStats();
-        displayReset();
         frame.setVisible(true);
     }
 
+    // Effects: displays options for when user gets incorrect guess.
+    // Modifies: This
     public void displayIncorrectEndGameOptions() {
         JPanel centerPane = new JPanel();
         clearStatisticsDisplay(centerPane);
@@ -308,7 +369,8 @@ public class MainGUI implements ActionListener {
         frame.add(centerPane, BorderLayout.CENTER);
     }
 
-
+    // Effects: Displays stats.
+    // Modifies: This
     // https://stackoverflow.com/questions/26933411/how-to-pass-list-string-to-jlabel-and-show-in-jframe
     public void displayAndFinalizeStats() {
         JScrollPane allStats = new JScrollPane();
@@ -333,6 +395,8 @@ public class MainGUI implements ActionListener {
     }
 
 
+    // Effects: Initiates game UI.
+    // Modifies: This.
     public void initPlayUI() {
         frame.getContentPane().removeAll();
         //frame.setLayout(null);
@@ -342,13 +406,15 @@ public class MainGUI implements ActionListener {
         displayCheck();
         displayStreak();
         saveInGame();
-        piecesGUI.displayPieces();
+        piecesGUI.displayWhitePieces();
         piecesGUI.displayUserWhiteSelection();
         piecesGUI.displayUserBlackSelection();
         piecesGUI.actionListeners();
         frame.setVisible(true);
     }
 
+    // Effects: Displays check button.
+    // Modifies: This.
     public void displayCheck() {
         check = new JButton("Check");
         check.addActionListener(this);
@@ -356,6 +422,8 @@ public class MainGUI implements ActionListener {
         gamePanel.add(check);
     }
 
+    // Effects: Checks to see if user completes/guesses correctly.
+    // Modifies: This
     public void check() {
         if (board.solved()) {
             boardstats.streak();
@@ -370,7 +438,8 @@ public class MainGUI implements ActionListener {
         }
     }
 
-
+    //Effects: Displays user streak
+    // Modifies: This
     public void displayStreak() {
         JButton streakLabel = new JButton("Current Streak:" + Integer.toString(boardstats.getStreak()));
         streakLabel.setEnabled(false);
@@ -380,6 +449,8 @@ public class MainGUI implements ActionListener {
     }
 
     // Heavily used: https://www.youtube.com/watch?v=vO7wHV0HB8w&t=250s&ab_channel=ScreenWorks, for creating the board
+    // Effects: Displays board tiles
+    // Modifies: This
     public void displayBoard() {
         gamePanel = new JLayeredPane();
         boardPanel = new JPanel() {
@@ -402,6 +473,8 @@ public class MainGUI implements ActionListener {
         panelAndFrameInit();
     }
 
+    // Effects: Initiates frame and panel
+    // Modifies: This
     public void panelAndFrameInit() {
         gamePanel.setBounds(0, 0, 64 * dimension + 500, 64 * dimension + 500);
         boardPanel.setBounds(0, 0, 64 * dimension + 500, 64 * dimension + 500);
@@ -415,6 +488,8 @@ public class MainGUI implements ActionListener {
         }
     }
 
+    // Effects: Starts the play mechanism
+    // Modifies: this
     public void play() {
         boardstats = new BoardStats();
         stats.addStat(boardstats);
@@ -423,6 +498,8 @@ public class MainGUI implements ActionListener {
     }
 
 
+    // Effects: Saves while in game.
+    // Modifies: this.
     public void saveInGame() {
         JButton saveAndExitButton = new JButton("Save and Exit");
         saveAndExitButton.addActionListener(new ActionListener() {
@@ -443,6 +520,7 @@ public class MainGUI implements ActionListener {
 
     }
 
+    // Effects: Saves board state.
     public void saveBoard() {
         try {
             jsonWriter.open();
@@ -454,6 +532,7 @@ public class MainGUI implements ActionListener {
         }
     }
 
+    // Effects: Saves stats
     public void saveStats() {
 
         try {
@@ -532,8 +611,8 @@ public class MainGUI implements ActionListener {
     }
 
 
-    public static void main(String[] args) {
-        new MainGUI();
-    }
+//    public static void main(String[] args) {
+//        new MainGUI();
+//    }
 
 }

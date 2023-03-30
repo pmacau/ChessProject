@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Contains most of piece mechanisms for GUI, such as placing pieces on the board, and generating images for pieces.
 public class PiecesGUI implements ActionListener {
 
     private Integer currentPieceSelected;
@@ -55,7 +57,8 @@ public class PiecesGUI implements ActionListener {
     private BoardStats stats;
     private List<String> guesses;
 
-
+    // Effects: Sets fields
+    // Modifies: This
     public PiecesGUI(JLayeredPane gamePanel, JFrame frame, Board board, BoardStats stats) {
         this.gamePanel = gamePanel;
         this.frame = frame;
@@ -66,6 +69,8 @@ public class PiecesGUI implements ActionListener {
         proposedSet = new ArrayList<>();
     }
 
+    // Effects: Adds action listeners to buttons.
+    // Modifies: This
     public void actionListeners() {
         whiteKingButton.addActionListener(this);
         whiteQueenButton.addActionListener(this);
@@ -82,6 +87,8 @@ public class PiecesGUI implements ActionListener {
     }
 
 
+    // Effects: Displays white piece selection
+    // Modifies: This
     public void displayUserWhiteSelection() {
         whiteKingButton = new JButton((Icon) new ImageIcon(whiteKing));
         whiteQueenButton = new JButton((Icon) new ImageIcon(whiteQueen));
@@ -103,6 +110,8 @@ public class PiecesGUI implements ActionListener {
         whiteBishopButton.setBounds(64 * dimension + 32, 128 + 64 + 64 + 64, 64, 64);
     }
 
+    // Effects: Displays black piece selection.
+    // Modifies: This.
     public void displayUserBlackSelection() {
         blackKingButton = new JButton((Icon) new ImageIcon(blackKing));
         blackQueenButton = new JButton((Icon) new ImageIcon(blackQueen));
@@ -124,6 +133,8 @@ public class PiecesGUI implements ActionListener {
         gamePanel.add(blackBishopButton);
     }
 
+    // Effects: Generates pieces
+    // Modifies: This
     // Same source used to parse images into actual pieces as the board source
     public void generatePieces() throws IOException {
         BufferedImage chessSet = ImageIO.read(new File("C:\\Users\\macau\\Downloads\\chess (1).png"));
@@ -151,8 +162,9 @@ public class PiecesGUI implements ActionListener {
     }
 
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void displayPieces() {
+    // Effects: Displays white pieces on the board.
+    // Modifies: This.
+    public void displayWhitePieces() {
         List<String> piecesOnBoard = board.getBoard();
         int i = 0;
         for (String piece : piecesOnBoard) {
@@ -168,7 +180,19 @@ public class PiecesGUI implements ActionListener {
                 addPiece(new JLabel(new ImageIcon(whiteBishop)), i);
             } else if (piece.equals("w.N")) {
                 addPiece(new JLabel(new ImageIcon(whiteKnight)), i);
-            } else if (piece.equals("b.Q")) {
+            }
+            i++;
+        }
+        displayBlackPieces();
+    }
+
+    // Effects: Displays black pieces on the board.
+    // Modifies: This
+    public void displayBlackPieces() {
+        List<String> piecesOnBoard = board.getBoard();
+        int i = 0;
+        for (String piece : piecesOnBoard) {
+            if (piece.equals("b.Q")) {
                 addPiece(new JLabel(new ImageIcon(blackQueen)), i);
             } else if (piece.equals("b.K")) {
                 addPiece(new JLabel(new ImageIcon(blackKing)), i);
@@ -185,6 +209,8 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+    // Effects: Adds piece to the board.
+    // Modifies: This.
     private void addPiece(JLabel label, int i) {
         int x = (i % dimension);
         int y = (i / dimension);
@@ -193,6 +219,8 @@ public class PiecesGUI implements ActionListener {
         label.setOpaque(false);
     }
 
+    // Effects: Allows for the board to respond to user input by having invisible buttons on board.
+    // Modifies: This.
     // partially used https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable#:~:
     // text=How%20do%20I%20make%20a,setVisible(false)%3B.
     public void createTileButtons() {
@@ -215,11 +243,15 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+    // Effects: Generates colours for the tiles.
+    // Modifies: This
     public void genColour() {
         brownTile = new Color(160, 77, 34, 123);
         whiteTile = new Color(255, 255, 255, 123);
     }
 
+    // Effects: Decides what team the piece is to later be placed.
+    // Modifies: This.
     public void placePiece(Integer i) {
         if (currentTeamSelected == 0) {
             placeWhitePiece(i);
@@ -228,7 +260,8 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
-
+    // Effects: Places white piece on board.
+    // Modifies: This.
     public void placeWhitePiece(Integer i) {
         if (currentPieceSelected == 0) {
             whiteKing(i);
@@ -246,59 +279,76 @@ public class PiecesGUI implements ActionListener {
 
     }
 
+    // Effects: Places whitePawn on the board.
+    // Modifies: This
     private void whitePawn(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whitePawn)), i);
         proposedSet.add("w.P" + ";" + coordinate);
         stats.addGuess("w.P;0.0");
+        stats.userGuesses("w.P,");
     }
 
+    // Effects: Places whiteRook on the board.
+    // Modifies: This
     private void whiteRook(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whiteRook)), i);
         proposedSet.add("w.R" + ";" + coordinate);
         stats.addGuess("w.R;0.0");
+        stats.userGuesses("w.R,");
     }
 
+    // Effects: Places whiteKnight on the board.
+    // Modifies: This.
     private void whiteKnight(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whiteKnight)), i);
         proposedSet.add("w.N" + ";" + coordinate);
         stats.addGuess("w.N;0.0");
+        stats.userGuesses("w.N,");
     }
 
+    // Effects: Places whiteBishop on the board.
+    // Modifies: This.
     private void whiteBishop(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whiteBishop)), i);
         proposedSet.add("w.B" + ";" + coordinate);
         stats.addGuess("w.B;0.0");
+        stats.userGuesses("w.B,");
     }
 
+    // Effects: Places whiteKing on the board.
+    // Modifies: This.
     private void whiteKing(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whiteKing)), i);
         proposedSet.add("w.K" + ";" + coordinate);
         stats.addGuess("w.K;0.0");
+        stats.userGuesses("w.K,");
     }
 
-
+    // Effects: Places whiteQueen on the board.
+    // Modifies: This
     private void whiteQueen(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(whiteQueen)), i);
         proposedSet.add("w.Q" + ";" + coordinate);
         stats.addGuess("w.Q;0.0");
+        stats.userGuesses("w.Q,");
     }
 
-    private String getGuess() {
-        return null;
-    }
-
+    // Effects: Determines the coordinates given the index of the piece.
+    // Modifies: This
     private String coordinateConversion(Integer i) {
         int x = i % dimension;
         int y = i / dimension;
         return x + "." + y;
     }
 
+    // Effects: Places black pieces on the board.
+    // Modifies: This
     public void placeBlackPiece(Integer i) {
         if (currentPieceSelected == 6) {
             blackKing(i);
@@ -315,52 +365,73 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+    // Effects: Places blackPawn on the board.
+    // Modifies: This
     private void blackPawn(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackPawn)), i);
         proposedSet.add("b.P" + ";" + coordinate);
         stats.addGuess("w.P;0.0");
+        stats.userGuesses("b.P,");
     }
 
+    // Effects: Places blackRook on the board.
+    // Modifies: This.
     private void blackRook(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackRook)), i);
         proposedSet.add("b.R" + ";" + coordinate);
         stats.addGuess("w.R;0.0");
+        stats.userGuesses("b.R,");
     }
 
+    // Effects: Places blackKnight on the board.
+    // Modifies: This.
     private void blackKnight(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackKnight)), i);
         proposedSet.add("b.N" + ";" + coordinate);
         stats.addGuess("w.N;0.0");
+        stats.userGuesses("b.N,");
     }
 
+    // Effects: Places blackBishop on the board.
+    // Modifies: This.
     private void blackBishop(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackBishop)), i);
         proposedSet.add("b.B" + ";" + coordinate);
         stats.addGuess("w.B;0.0");
+        stats.userGuesses("b.B,");
     }
 
+    // Effects: Places blackQueen on the board.
+    // Modifies: This.
     private void blackQueen(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackQueen)), i);
         proposedSet.add("b.Q" + ";" + coordinate);
         stats.addGuess("w.Q;0.0");
+        stats.userGuesses("b.Q,");
     }
 
+    // Effects: Places blackKing on the board.
+    // Modifies: This.
     public void blackKing(Integer i) {
         String coordinate = coordinateConversion(i);
         addPiece(new JLabel(new ImageIcon(blackKing)), i);
         proposedSet.add("b.K" + ";" + coordinate);
         stats.addGuess("w.K;0.0");
+        stats.userGuesses("b.K,");
     }
 
+    // getter
     public List<String> getProposedSet() {
         return proposedSet;
     }
 
+    // Effects: Performs actions when buttons are pressed.
+    // Modifies: This.
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton actionSource = (JButton) e.getSource();
@@ -372,6 +443,8 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+    // Effects: Selects the index for a given piece.
+    // Modifies: This
     private void selectPiece(JButton button) {
         currentTeamSelected = 0;
         if (button.equals(whiteKingButton)) {
@@ -391,6 +464,8 @@ public class PiecesGUI implements ActionListener {
         }
     }
 
+    // Effects: Selects an index for a given piece.
+    // Modifies: This.
     private void selectRest(JButton button) {
         currentTeamSelected = 1;
         if (button.equals(blackKingButton)) {

@@ -47,3 +47,16 @@ As a user,
 - I want the pieces added to have a random team either white or black. (complete)
 - I want to be able to save my game, so it would save my statistics, my current game, if I so choose. 
 - I want to be able to load my game (if I so choose).
+
+### ***Instructions for Grader***
+- To generate an action (adding multiple Xs to a Y) which in this case adding a board stat to statistics, you simply 
+have to just play a game, in which at the end (either you solve or lose the board) you will see the statistics to the 
+right on a JScrollPanel. So simply just press play off of the main menu, and select a dimension e.g. 4, and then a 
+difficulty e.g. hard, and then play the game to completion, then you will see the statistic being added. 
+- To generate the other action associated to multiple Xs to a Y, when you finish a game, just as in the first 
+instruction, you can press the reset statistics button which wipes all the stats, clearing the history of statistics. 
+- The visual component is the game itself, as there are images shown board, which are the pieces. 
+- You can save in multiple places on the GUI by pressing the save button on the screen, either on the main menu, the end 
+of a game, or by pressing the save and quit button while in a game. 
+- The user can simply load the state of the application from the main menu, by pressing the load button. 
+

@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+// Effects: Runs console UI.
+
 public class BoardApp {
     private static final String JSON_STORE = "./data/workroom.json";
     private static final String JSON_STORE1 = "./data/statistics.json";
@@ -62,6 +64,7 @@ public class BoardApp {
         }
     }
 
+    //Effects: User can view guesses
     public void view() {
         try {
             stats = jsonReaderStat.readStats();
@@ -73,6 +76,7 @@ public class BoardApp {
         }
     }
 
+    // EffectssL Displays user guesses
     private void viewGuesses() {
         System.out.println("Previous board guesses ");
         List<BoardStats> returnStats = stats.returnStats();
@@ -194,7 +198,6 @@ public class BoardApp {
         System.out.println("You are incorrect");
         stats.addStat(boardStats);
         seeStats();
-        board.boardSetComplete();
         playOrExit();
     }
 
@@ -273,6 +276,8 @@ public class BoardApp {
         }
     }
 
+    // Effects: Saves while in game
+    // Modifies: this.
     public void saveInGame() {
         System.out.println("If you'd like to save your game and quit type 'save/q', if not type anything else");
         scan = new Scanner(System.in);
@@ -285,6 +290,8 @@ public class BoardApp {
         }
     }
 
+    // Effects: Saves board state.
+    // Modifies: this.
     public void saveBoard() {
         try {
             jsonWriter.open();
@@ -296,6 +303,8 @@ public class BoardApp {
         }
     }
 
+    // Effects: Saves stats.
+    // Modifies: this.
     public void saveStats() {
 
         try {
