@@ -233,3 +233,20 @@ Creating Json with current BoardStats
 
 Fri Apr 07 21:09:53 PDT 2023
 Stats converted to Json
+
+### ***Phase 4: Task 3***
+Reflection: 
+
+Looking back on the implementation of MainGUI, I regret not delegating more functionalities into completely separate
+classes, e.g PiecesGUI which for the most part took care of most piece mechanisms. As the MainGUI, 
+had many methods which accomplished many 'unrelated' tasks. If I were to refactor MainGUI, I would likely 
+create a OptionsGUI as many methods are related directly to just options in the class, and take up a substantial amount 
+of fields (as JButtons). So essentially I would be increasing the number of associations MainGUI to increase the overall 
+class cohesion. 
+
+I'm quite happy with the design of my model classes. However, if I were to potentially explore another approach, I could
+make another class pertaining to all the generation methods which takes care of tasks such as generating the next piece 
+on the board. So I would delegate methods to another class essentially, which would make the structure  
+easier to understand, and if I were to make future updates to the game such as modifiers such as custom coloured pieces generating, 
+I would be able to add on to the generation class, as the board itself doesn't really change with that. 
+
