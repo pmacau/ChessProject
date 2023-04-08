@@ -32,6 +32,7 @@ public class BoardStats implements Writable {
         totalStat.add("0");
         totalStat.add("Most Guessed Piece");
         totalStat.add("N/A");
+        EventLog.getInstance().logEvent(new Event("New BoardStats created"));
     }
 
     // Effects: Changes difficulty statistic for board.
@@ -39,6 +40,7 @@ public class BoardStats implements Writable {
     // Requires: difficulty should be easy, medium, or hard.
     public void difficulty(String difficulty) {
         totalStat.set(1, difficulty);
+        EventLog.getInstance().logEvent(new Event("Difficulty set: " + difficulty));
     }
 
     // Effects: Changes size statistic for board.
@@ -47,12 +49,14 @@ public class BoardStats implements Writable {
     public void boardSize(Integer tiles) {
         String stringTiles = Integer.toString(tiles);
         totalStat.set(3, stringTiles);
+        EventLog.getInstance().logEvent(new Event("boardSize: " + tiles));
     }
 
     // Effects: Sets most guess for testing purposes.
     // Modifies: This
     public void setGuess(String piece) {
         totalStat.set(7, piece);
+        EventLog.getInstance().logEvent(new Event("Set guess: " + piece));
     }
 
 
@@ -62,6 +66,7 @@ public class BoardStats implements Writable {
         this.streak++;
         String stringStreak = Integer.toString(this.streak);
         totalStat.set(5, stringStreak);
+        EventLog.getInstance().logEvent(new Event("Streak updated"));
     }
 
     // Modifies: This
@@ -70,6 +75,7 @@ public class BoardStats implements Writable {
     // Requires: Must have valid pieceNotation, e.g "team"."piece";"x-cord"."y-cord"
     public void addGuess(String pieceNotation) {
         String piece = pieceNotation.substring(pieceNotation.length() - 5, pieceNotation.length() - 4);
+        EventLog.getInstance().logEvent(new Event("Guess: " + piece + " added"));
         piecesGuessed.add(piece);
         updateGuess();
     }
@@ -98,7 +104,7 @@ public class BoardStats implements Writable {
                 r += 1;
             }
         }
-
+        EventLog.getInstance().logEvent(new Event("Updated guess"));
         sortGuessByMax(k, n, q, b, p, r);
     }
 
@@ -116,6 +122,7 @@ public class BoardStats implements Writable {
         if (!((k == 0 && n == 0) && (q == 0 && b == 0) && (p == 0 && r == 0))) {
             mostGuessedPiece(indexOfMax);
         }
+        EventLog.getInstance().logEvent(new Event("Sorted guess"));
     }
 
     // Effects: processes index of most guessed piece and converts it to the piece itself and adds it to statistics,
@@ -136,58 +143,69 @@ public class BoardStats implements Writable {
         } else {
             totalStat.set(7, "Rook");
         }
+        EventLog.getInstance().logEvent(new Event("Most guessed piece"));
     }
 
     // Effects: Adds guess to user guesses.
     // Modifies: This
     public void userGuesses(String guess) {
         allGuesses.add(guess);
+        EventLog.getInstance().logEvent(new Event("Guess added to user guesses"));
     }
 
     // Getter
     public List<String> getUserGuesses() {
+        EventLog.getInstance().logEvent(new Event("Returning user guesses"));
         return allGuesses;
     }
 
 
     // Getter
     public List<String> getGuess() {
+        EventLog.getInstance().logEvent(new Event("Returning pieces guessed"));
         return piecesGuessed;
     }
 
     // Getter
     public List<String> getTotalStat() {
+        EventLog.getInstance().logEvent(new Event("Returning total stat"));
         return totalStat;
     }
 
     // Getter
     public Integer getStreak() {
+        EventLog.getInstance().logEvent(new Event("Getting streak"));
         return this.streak;
     }
 
     // Getter
     public Integer getSize() {
+        EventLog.getInstance().logEvent(new Event("Getting size"));
         return Integer.parseInt(totalStat.get(3));
     }
 
     // Getter
     public String getMostGuess() {
+        EventLog.getInstance().logEvent(new Event("Getting most guessed"));
         return totalStat.get(7);
     }
 
     //Effects: Adds pieces guessed
     // Modifies: This
     public void addPiecesGuessed(String piece) {
+        EventLog.getInstance().logEvent(new Event("Adding piece guessed"));
         piecesGuessed.add(piece);
     }
 
     public List<String> getPiecesGuessed() {
+        EventLog.getInstance().logEvent(new Event("Getting pieces guessed"));
         return piecesGuessed;
     }
 
     // Effects: Creates Json, with current statistics of the board.
     @Override
     public JSONObject toJson() {
+        EventLog.getInstance().logEvent(new Event("Creating Json with current BoardStats"));
         JSONObject json = new JSONObject();
         json.put("Difficulty", totalStat.get(1));
         json.put("Difficulty", totalStat.get(1));

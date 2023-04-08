@@ -2,6 +2,8 @@ package ui;
 
 import model.Board;
 import model.BoardStats;
+import model.Event;
+import model.EventLog;
 import model.Stats;
 import org.json.JSONException;
 
@@ -9,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -18,8 +22,10 @@ import java.util.TimerTask;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+// import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
+
 // Graphical user interface containing most of the user displays.
-public class MainGUI implements ActionListener {
+public class MainGUI implements ActionListener, WindowListener {
     // private final JLabel label;
     private JButton buttonPlay;
     private JButton buttonView;
@@ -73,6 +79,7 @@ public class MainGUI implements ActionListener {
     // Modifies: This
     public void init() {
         frame = new JFrame();
+        frame.addWindowListener(this);
         panel = new JPanel();
         buttonPlay = new JButton("Play");
         view();
@@ -508,6 +515,7 @@ public class MainGUI implements ActionListener {
                 // stats.addStat(boardstats);
                 saveStats();
                 saveBoard();
+                windowClosing(null);
                 System.exit(0);
             }
 
@@ -595,6 +603,7 @@ public class MainGUI implements ActionListener {
         } else if (actionSource.equals(buttonPlay)) {
             playOptions();
         } else if (actionSource.equals(buttonQuit)) {
+            windowClosing(null);
             System.exit(0);
         } else if (actionSource.equals(check)) {
             check();
@@ -610,9 +619,41 @@ public class MainGUI implements ActionListener {
 
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
 
-//    public static void main(String[] args) {
-//        new MainGUI();
-//    }
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (Event i : EventLog.getInstance()) {
+            System.out.println(i);
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
+
+
 
 }
