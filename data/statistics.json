@@ -1,8 +1,8 @@
 {"stats": [{
-    "Guesses": ["b.B,"],
+    "Guesses": ["w.P,"],
     "Streak": "1",
-    "ForMost": ["B"],
+    "ForMost": ["P"],
     "Difficulty": "Hard",
-    "Size": "2",
-    "Most Guessed Piece": "Bishop"
+    "Size": "4",
+    "Most Guessed Piece": "Pawn"
 }]}

@@ -60,3 +60,176 @@ instruction, you can press the reset statistics button which wipes all the stats
 of a game, or by pressing the save and quit button while in a game. 
 - The user can simply load the state of the application from the main menu, by pressing the load button. 
 
+### ***Phase 4: Task 2*** 
+Sample log:
+
+Fri Apr 07 21:09:20 PDT 2023
+New 'Stats' is made
+
+Fri Apr 07 21:09:24 PDT 2023
+New BoardStats created
+
+Fri Apr 07 21:09:24 PDT 2023
+model.BoardStats@16cf9b35added
+
+Fri Apr 07 21:09:24 PDT 2023
+boardSize: 4
+
+Fri Apr 07 21:09:24 PDT 2023
+Difficulty set: Hard
+
+Fri Apr 07 21:09:24 PDT 2023
+Getting streak
+
+Fri Apr 07 21:09:27 PDT 2023
+Guess: N added
+
+Fri Apr 07 21:09:27 PDT 2023
+Updated guess
+
+Fri Apr 07 21:09:27 PDT 2023
+Most guessed piece
+
+Fri Apr 07 21:09:27 PDT 2023
+Sorted guess
+
+Fri Apr 07 21:09:27 PDT 2023
+Guess added to user guesses
+
+Fri Apr 07 21:09:28 PDT 2023
+Streak updated
+
+Fri Apr 07 21:09:28 PDT 2023
+boardSize: 4
+
+Fri Apr 07 21:09:28 PDT 2023
+Difficulty set: Hard
+
+Fri Apr 07 21:09:28 PDT 2023
+Getting streak
+
+Fri Apr 07 21:09:30 PDT 2023
+Guess: N added
+
+Fri Apr 07 21:09:30 PDT 2023
+Updated guess
+
+Fri Apr 07 21:09:30 PDT 2023
+Most guessed piece
+
+Fri Apr 07 21:09:30 PDT 2023
+Sorted guess
+
+Fri Apr 07 21:09:30 PDT 2023
+Guess added to user guesses
+
+Fri Apr 07 21:09:32 PDT 2023
+Guess: K added
+
+Fri Apr 07 21:09:32 PDT 2023
+Updated guess
+
+Fri Apr 07 21:09:32 PDT 2023
+Most guessed piece
+
+Fri Apr 07 21:09:32 PDT 2023
+Sorted guess
+
+Fri Apr 07 21:09:32 PDT 2023
+Guess added to user guesses
+
+Fri Apr 07 21:09:33 PDT 2023
+Streak updated
+
+Fri Apr 07 21:09:33 PDT 2023
+boardSize: 4
+
+Fri Apr 07 21:09:33 PDT 2023
+Difficulty set: Hard
+
+Fri Apr 07 21:09:33 PDT 2023
+Getting streak
+
+Fri Apr 07 21:09:35 PDT 2023
+Guess: P added
+
+Fri Apr 07 21:09:35 PDT 2023
+Updated guess
+
+Fri Apr 07 21:09:35 PDT 2023
+Most guessed piece
+
+Fri Apr 07 21:09:35 PDT 2023
+Sorted guess
+
+Fri Apr 07 21:09:35 PDT 2023
+Guess added to user guesses
+
+Fri Apr 07 21:09:36 PDT 2023
+Stats is returned
+
+Fri Apr 07 21:09:36 PDT 2023
+Returning total stat
+
+Fri Apr 07 21:09:42 PDT 2023
+New 'Stats' is made
+
+Fri Apr 07 21:09:42 PDT 2023
+New BoardStats created
+
+Fri Apr 07 21:09:42 PDT 2023
+Stats is returned
+
+Fri Apr 07 21:09:44 PDT 2023
+Stats converted to Json
+
+Fri Apr 07 21:09:49 PDT 2023
+New BoardStats created
+
+Fri Apr 07 21:09:49 PDT 2023
+model.BoardStats@1ef11424added
+
+Fri Apr 07 21:09:49 PDT 2023
+boardSize: 4
+
+Fri Apr 07 21:09:49 PDT 2023
+Difficulty set: Hard
+
+Fri Apr 07 21:09:49 PDT 2023
+Getting streak
+
+Fri Apr 07 21:09:52 PDT 2023
+Guess: P added
+
+Fri Apr 07 21:09:52 PDT 2023
+Updated guess
+
+Fri Apr 07 21:09:52 PDT 2023
+Most guessed piece
+
+Fri Apr 07 21:09:52 PDT 2023
+Sorted guess
+
+Fri Apr 07 21:09:52 PDT 2023
+Guess added to user guesses
+
+Fri Apr 07 21:09:52 PDT 2023
+Streak updated
+
+Fri Apr 07 21:09:52 PDT 2023
+boardSize: 4
+
+Fri Apr 07 21:09:52 PDT 2023
+Difficulty set: Hard
+
+Fri Apr 07 21:09:52 PDT 2023
+Getting streak
+
+Fri Apr 07 21:09:53 PDT 2023
+Stat added to JSONArray
+
+Fri Apr 07 21:09:53 PDT 2023
+Creating Json with current BoardStats
+
+Fri Apr 07 21:09:53 PDT 2023
+Stats converted to Json

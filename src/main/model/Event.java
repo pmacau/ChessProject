@@ -18,6 +18,8 @@ public class Event {
      *
      * @param description a description of the event
      */
+    // Effects: Sets description with corresponding date.
+    // Modifies: This
     public Event(String description) {
         dateLogged = Calendar.getInstance().getTime();
         this.description = description;
@@ -28,6 +30,7 @@ public class Event {
      *
      * @return the date of the event
      */
+    // Effects: Returns date logged
     public Date getDate() {
         return dateLogged;
     }
@@ -37,6 +40,7 @@ public class Event {
      *
      * @return the description of the event
      */
+    // Effects: Returns date logged
     public String getDescription() {
         return description;
     }
