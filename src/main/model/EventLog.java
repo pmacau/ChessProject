@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Represents a log of alarm system events.
+ * Represents a log of Board events.
  * We use the Singleton Design Pattern to ensure that there is only
  * one EventLog in the system and that the system has global access
  * to the single instance of the EventLog.
@@ -21,6 +21,7 @@ public class EventLog implements Iterable<Event> {
      * Prevent external construction.
      * (Singleton Design Pattern).
      */
+    // Effects: Starts events
     private EventLog() {
         events = new ArrayList<Event>();
     }
@@ -32,6 +33,8 @@ public class EventLog implements Iterable<Event> {
      *
      * @return instance of EventLog
      */
+    // Effects: Initializes/gets the class.
+    // Modifies: This
     public static EventLog getInstance() {
         if (theLog == null) {
             theLog = new EventLog();
@@ -45,6 +48,8 @@ public class EventLog implements Iterable<Event> {
      *
      * @param e the event to be added
      */
+    // Effects: Logs event
+    // Modifies: This
     public void logEvent(Event e) {
         events.add(e);
     }
@@ -52,11 +57,14 @@ public class EventLog implements Iterable<Event> {
     /**
      * Clears the event log and logs the event.
      */
+    // Effects: Clears event log
+    // Modifies: This
     public void clear() {
         events.clear();
         logEvent(new Event("Event log cleared."));
     }
 
+    // Effects: Returns events.iterator, to iterate through the object.
     @Override
     public Iterator<Event> iterator() {
         return events.iterator();

@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 /**
- * Represents an alarm system event.
+ * Represents an event.
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;
@@ -45,6 +45,7 @@ public class Event {
         return description;
     }
 
+    // Effects: Handles equal operations.
     @Override
     public boolean equals(Object other) {
         if (other == null) {
@@ -63,11 +64,13 @@ public class Event {
                 this.description.equals(otherEvent.description));
     }
 
+    // Effects: Gives the hashCode
     @Override
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
     }
 
+    // Effects: Returns string of event
     @Override
     public String toString() {
         return dateLogged.toString() + "\n" + description;
