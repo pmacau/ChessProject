@@ -218,9 +218,6 @@ public class BoardApp {
         timer.schedule(new TimerTask() {
             public void run() {
                 System.out.print("\n---------------" + "\n---------------" + "\n---------------");
-                // in the final version the board itself will disappear, however
-                // I don't believe the console for IntelliJ is capable of that or at least
-                // to my knowledge.
                 System.out.print("\n Please recall the positions on the board, "
                         + "separate multiple pieces with a comma, also make sure"
                         + " to use the notation presented in the visual printed, "

@@ -1,6 +1,6 @@
 package persistence;
 
-// Note: Structured from JsonSerialization example.
+
 
 import model.Board;
 import model.BoardStats;

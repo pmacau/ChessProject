@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-// Note: Structured from JsonSerialization example.
+
 // Reads Json files.
 public class JsonReader {
     private String source;
@@ -122,7 +122,7 @@ public class JsonReader {
     }
 
 
-    // taken directly from EdX example JsonSerialization.
+
     // EFFECTS: reads source file as string and returns it
     public String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
