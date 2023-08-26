@@ -1,7 +1,7 @@
 # My Personal Project
 
 ## **Information about the Project** 
-- ### ***What will the application do?***
+- ### ***What the application does***
 It will show you a chess piece on a board, and then you have a 1-7 seconds depending on difficulty
 to memorize the board, and then the board goes blank, and you have to correctly recall what positions and potentially 
 what side (black or white), 
@@ -13,7 +13,7 @@ So it is essentially a memorization chess based game. The game will have an in-g
 to showcase achievements of the player. 
 
 
-- ### ***Why is this project of interest to you?***
+- ### ***Interest for the game***
 I always liked doing memorization recall games, and I also enjoy playing chess, and I thought
 that combining the two would make for a fun, and potentially more applicable game than usual tile recall games, at 
 least for me. As remembering chunks of the board in chess is very important when attempting to generate potential lines
